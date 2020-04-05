@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "name": "Mi Farma Av. Paseo de la Rep.",
+        "address": "Av. Paseo de la República 1932",
+        "schedule": "8:00 a.m. - 10:00 p.m.",
+        "status": "Disponible"
+    },
+    {
+        "id": 2,
+        "name": "Mi Farma Pqe. San José",
+        "address": "Av. Huiracocha 1365. Jesús María",
+        "schedule": "10:00 a.m. - 9:00 p.m.",
+        "status": "Disponible"
+    },
+    {
+        "id": 3,
+        "name": "Mi Farma Cnel. Zegarra",
+        "address": "Av. Santa Cruz 716.",
+        "schedule": "8:00 a.m. - 10:00 p.m.",
+        "status": "Disponible"
+    },
+    {
+        "id": 4,
+        "name": "Mi Farma San Luis",
+        "address": "Av. Aviación 2319",
+        "schedule": "7:00 a.m. - 10:00 p.m.",
+        "status": "Deshabilitado"
+    },
+    {
+        "id": 5,
+        "name": "Mi Farma San Borja",
+        "address": "Av. San Borja Norte 345",
+        "schedule": "11:00 a.m. - 6:00 p.m.",
+        "status": "Disponible"
+    },
+    {
+        "id": 6,
+        "name": "Mi Farma Plaza Norte",
+        "address": "Av. Nicolás Mendieta 2334",
+        "schedule": "7:00 a.m. - 10:00 p.m.",
+        "status": "Deshabilitado"
+    },
+    {
+        "id": 7,
+        "name": "Mi Farma Plaza Lima Sur",
+        "address": "Av. Panamericana Sur 2988",
+        "schedule": "8:00 a.m. - 10:00 p.m.",
+        "status": "Deshabilitado"
+    }
+]
