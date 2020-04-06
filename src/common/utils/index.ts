@@ -1,0 +1,1 @@
+export { MySweetAlert } from './alert';

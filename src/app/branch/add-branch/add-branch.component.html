@@ -20,7 +20,7 @@
                                     class="form-control"
                                     [country]="'pe'"
                                     [types]="['address']"
-                                    [(ngModel)]="address"
+                                    [(ngModel)]="branch.address"
                                     (onAutocompleteSelected)="onAutocompleteSelected($event)"
                                     (onLocationSelected)="onLocationSelected($event)"
                                     required>
@@ -33,8 +33,8 @@
                         </mat-form-field>
                     </div>
                     <div>
-                        <agm-map  [latitude]="latitude" [longitude]="longitude" [zoom]="14" [scrollwheel]="null" [gestureHandling]="'cooperative'">
-                            <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                        <agm-map  [latitude]="branch.latitude" [longitude]="branch.longitude" [zoom]="14" [scrollwheel]="null" [gestureHandling]="'cooperative'">
+                            <agm-marker [latitude]="branch.latitude" [longitude]="branch.longitude"></agm-marker>
                         </agm-map>
                     </div>
                     <div fxLayout="row wrap">
@@ -42,14 +42,14 @@
                         <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
                                 <mat-label>Hora de apertura</mat-label>
-                                <input name="opensAt" matInput required [ngxTimepicker]="opensAt" [(ngModel)]="branchOpensAt" (change)="validateOpenTime()" readonly>
+                                <input name="opensAt" matInput required [ngxTimepicker]="opensAt" [(ngModel)]="branch.opensAt" (ngModelChange)="validateOpenTime()" readonly>
                                 <ngx-material-timepicker #opensAt [defaultTime]="'08:00 am'"></ngx-material-timepicker>
                             </mat-form-field>
                         </div>
                         <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
                                 <mat-label>Hora de cierre</mat-label>
-                                <input name="closesAt" matInput required [ngxTimepicker]="closesAt" [(ngModel)]="branchClosesAt" (change)="validateCloseTime()" readonly>
+                                <input name="closesAt" matInput required [ngxTimepicker]="closesAt" [(ngModel)]="branch.closesAt" (ngModelChange)="validateCloseTime()" readonly>
                                 <ngx-material-timepicker #closesAt [defaultTime]="'10:00 pm'"></ngx-material-timepicker>
                             </mat-form-field>
                         </div>
