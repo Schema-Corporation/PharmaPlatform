@@ -18,6 +18,7 @@ import { DemoMaterialModule } from './demo-material-module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from '../environments/environment';
 
@@ -46,6 +47,7 @@ const googleMapsParams = {
     SharedModule,
     RouterModule.forRoot(AppRoutes),
     MatGoogleMapsAutocompleteModule,
+    NgxMaterialTimepickerModule,
     AgmCoreModule.forRoot(googleMapsParams)
   ],
   providers: [

@@ -7,8 +7,8 @@
                  </div>
             </div>
             <div>
-                <div>
-                    <mat-form-field class="full-width" [appearance]="'standard'">
+                <div class="row-wrap">
+                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
                         <mat-label>Dirección del local</mat-label>
                         <input matInput
                                 matValidateAddress
@@ -28,6 +28,23 @@
                             <span>La dirección es inválida</span>
                         </mat-error>
                     </mat-form-field>
+                </div>
+                <div fxLayout="row wrap">
+                    <!-- column -->    
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
+                            <mat-label>Hora de apertura</mat-label>
+                            <input matInput required [ngxTimepicker]="opensAt" disabled>
+                            <ngx-material-timepicker #opensAt [defaultTime]="'08:00 am'"></ngx-material-timepicker>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
+                            <mat-label>Hora de cierre</mat-label>
+                            <input matInput required [ngxTimepicker]="closesAt" disabled>
+                            <ngx-material-timepicker #closesAt [defaultTime]="'10:00 pm'"></ngx-material-timepicker>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
 

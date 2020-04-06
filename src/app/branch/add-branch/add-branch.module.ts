@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddBranchComponent } from './add-branch.component';
 import { AddBranchRoutes } from './add-branch.routing';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
     DemoMaterialModule,
     FlexLayoutModule,
     MatGoogleMapsAutocompleteModule,
+    NgxMaterialTimepickerModule.setLocale('es-419'),
     RouterModule.forChild(AddBranchRoutes)
   ],
   declarations: [AddBranchComponent]
