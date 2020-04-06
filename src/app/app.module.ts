@@ -17,6 +17,16 @@ import { DemoMaterialModule } from './demo-material-module';
 
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from '../environments/environment';
+
+const googleMapsParams = {
+  apiKey: environment.GOOGLE_MAPS_API_KEY,
+  libraries: ['places'],
+  language: 'es',
+  // region: 'DE'
+};
 
 @NgModule({
   declarations: [
@@ -34,7 +44,9 @@ import { SpinnerComponent } from './shared/spinner.component';
     FlexLayoutModule,
     HttpClientModule,
     SharedModule,
-    RouterModule.forRoot(AppRoutes)
+    RouterModule.forRoot(AppRoutes),
+    MatGoogleMapsAutocompleteModule,
+    AgmCoreModule.forRoot(googleMapsParams)
   ],
   providers: [
     {

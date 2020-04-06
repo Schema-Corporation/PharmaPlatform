@@ -1,0 +1,35 @@
+<mat-card>
+        <mat-card-content>
+            <div>
+                <div>
+                    <mat-card-title>Agregar local</mat-card-title>
+                     <mat-card-subtitle>Agrega un nuevo local a tu empresa</mat-card-subtitle> 
+                 </div>
+            </div>
+            <div>
+                <div>
+                    <mat-form-field class="full-width" [appearance]="'standard'">
+                        <mat-label>Dirección del local</mat-label>
+                        <input matInput
+                                matValidateAddress
+                                matGoogleMapsAutocomplete
+                                #matGoogleMapsAutocomplete="matGoogleMapsAutocomplete"
+                                placeholder="'Selecciona la ubicación'"
+                                class="form-control"
+                                [country]="'pe'"
+                                [types]="['address']"
+                                (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                                (onLocationSelected)="onLocationSelected($event)"
+                                required>
+                        <mat-error *ngIf="matGoogleMapsAutocomplete.addressSearchControl.hasError('required')">
+                            <span>La dirección es requerida</span>
+                        </mat-error>
+                        <mat-error *ngIf="matGoogleMapsAutocomplete.addressSearchControl.hasError('validateAddress')">
+                            <span>La dirección es inválida</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </mat-card-content>
+    </mat-card>

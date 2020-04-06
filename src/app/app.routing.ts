@@ -22,6 +22,10 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./branch/branch.module').then(m => m.BranchModule)
       },
       {
+        path: 'add_branch',
+        loadChildren: () => import('./branch/add-branch/add-branch.module').then(m => m.AddBranchModule)
+      },
+      {
         path: 'product',
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
       },
