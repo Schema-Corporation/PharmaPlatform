@@ -7,6 +7,15 @@ import { AddBranchComponent } from './add-branch.component';
 import { AddBranchRoutes } from './add-branch.routing';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from '../../../environments/environment';
+
+const googleMapsParams = {
+  apiKey: environment.GOOGLE_MAPS_API_KEY,
+  libraries: ['places'],
+  language: 'es',
+};
+
 
 @NgModule({
   imports: [
@@ -15,7 +24,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     FlexLayoutModule,
     MatGoogleMapsAutocompleteModule,
     NgxMaterialTimepickerModule.setLocale('es-419'),
-    RouterModule.forChild(AddBranchRoutes)
+    RouterModule.forChild(AddBranchRoutes),
+    AgmCoreModule.forRoot(googleMapsParams)
   ],
   declarations: [AddBranchComponent]
 })

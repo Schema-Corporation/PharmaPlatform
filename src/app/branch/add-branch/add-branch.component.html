@@ -46,6 +46,11 @@
                         </mat-form-field>
                     </div>
                 </div>
+                <div style="margin-top: 20px;" class="row-wrap">
+                    <agm-map  [latitude]="latitude" [longitude]="longitude" [zoom]="14" [scrollwheel]="null" [gestureHandling]="'cooperative'">
+                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                      </agm-map>
+                </div>
             </div>
 
         </mat-card-content>
