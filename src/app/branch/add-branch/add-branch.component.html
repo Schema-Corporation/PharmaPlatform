@@ -7,51 +7,62 @@
                  </div>
             </div>
             <div>
-                <div class="row-wrap">
-                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
-                        <mat-label>Dirección del local</mat-label>
-                        <input matInput
-                                matValidateAddress
-                                matGoogleMapsAutocomplete
-                                #matGoogleMapsAutocomplete="matGoogleMapsAutocomplete"
-                                placeholder="'Selecciona la ubicación'"
-                                class="form-control"
-                                [country]="'pe'"
-                                [types]="['address']"
-                                (onAutocompleteSelected)="onAutocompleteSelected($event)"
-                                (onLocationSelected)="onLocationSelected($event)"
-                                required>
-                        <mat-error *ngIf="matGoogleMapsAutocomplete.addressSearchControl.hasError('required')">
-                            <span>La dirección es requerida</span>
-                        </mat-error>
-                        <mat-error *ngIf="matGoogleMapsAutocomplete.addressSearchControl.hasError('validateAddress')">
-                            <span>La dirección es inválida</span>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div fxLayout="row wrap">
-                    <!-- column -->    
-                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
-                        <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
-                            <mat-label>Hora de apertura</mat-label>
-                            <input matInput required [ngxTimepicker]="opensAt" readonly>
-                            <ngx-material-timepicker #opensAt [defaultTime]="'08:00 am'"></ngx-material-timepicker>
+                <form>
+                    <div fxLayout="row wrap">
+                        <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                            <mat-label>Dirección del local</mat-label>
+                            <input  name="address"
+                                    matInput
+                                    matValidateAddress
+                                    matGoogleMapsAutocomplete
+                                    #matGoogleMapsAutocomplete="matGoogleMapsAutocomplete"
+                                    placeholder="'Selecciona la ubicación'"
+                                    class="form-control"
+                                    [country]="'pe'"
+                                    [types]="['address']"
+                                    [(ngModel)]="address"
+                                    (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                                    (onLocationSelected)="onLocationSelected($event)"
+                                    required>
+                            <mat-error *ngIf="matGoogleMapsAutocomplete.addressSearchControl.hasError('required')">
+                                <span>La dirección es requerida</span>
+                            </mat-error>
+                            <mat-error *ngIf="matGoogleMapsAutocomplete.addressSearchControl.hasError('validateAddress')">
+                                <span>La dirección es inválida</span>
+                            </mat-error>
                         </mat-form-field>
                     </div>
-                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
-                        <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
-                            <mat-label>Hora de cierre</mat-label>
-                            <input matInput required [ngxTimepicker]="closesAt" readonly>
-                            <ngx-material-timepicker #closesAt [defaultTime]="'10:00 pm'"></ngx-material-timepicker>
-                        </mat-form-field>
+                    <div>
+                        <agm-map  [latitude]="latitude" [longitude]="longitude" [zoom]="14" [scrollwheel]="null" [gestureHandling]="'cooperative'">
+                            <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                        </agm-map>
                     </div>
-                </div>
-                <div style="margin-top: 20px;" class="row-wrap">
-                    <agm-map  [latitude]="latitude" [longitude]="longitude" [zoom]="14" [scrollwheel]="null" [gestureHandling]="'cooperative'">
-                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-                      </agm-map>
-                </div>
+                    <div fxLayout="row wrap">
+                        <!-- column -->    
+                        <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                            <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
+                                <mat-label>Hora de apertura</mat-label>
+                                <input name="opensAt" matInput required [ngxTimepicker]="opensAt" [(ngModel)]="branchOpensAt" (change)="validateOpenTime()" readonly>
+                                <ngx-material-timepicker #opensAt [defaultTime]="'08:00 am'"></ngx-material-timepicker>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                            <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
+                                <mat-label>Hora de cierre</mat-label>
+                                <input name="closesAt" matInput required [ngxTimepicker]="closesAt" [(ngModel)]="branchClosesAt" (change)="validateCloseTime()" readonly>
+                                <ngx-material-timepicker #closesAt [defaultTime]="'10:00 pm'"></ngx-material-timepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="buttons-footer">
+                        <div class="pull-right">
+                            <button mat-raised-button color="primary" value="Registrar" (click)="registerBranch()">Registrar</button>
+                        </div>
+                    </div>
+                </form>
+                
             </div>
+            
 
         </mat-card-content>
     </mat-card>

@@ -9,6 +9,7 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 const googleMapsParams = {
   apiKey: environment.GOOGLE_MAPS_API_KEY,
@@ -25,7 +26,8 @@ const googleMapsParams = {
     MatGoogleMapsAutocompleteModule,
     NgxMaterialTimepickerModule.setLocale('es-419'),
     RouterModule.forChild(AddBranchRoutes),
-    AgmCoreModule.forRoot(googleMapsParams)
+    AgmCoreModule.forRoot(googleMapsParams),
+    FormsModule
   ],
   declarations: [AddBranchComponent]
 })
