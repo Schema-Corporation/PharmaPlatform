@@ -6,7 +6,6 @@ import {
 import PlaceResult = google.maps.places.PlaceResult;
 import { IBranch } from "../../../common/types";
 import { MySweetAlert } from "../../../common/utils";
-import Swal from "sweetalert2";
 
 @Component({
   selector: "app-add-branch",
