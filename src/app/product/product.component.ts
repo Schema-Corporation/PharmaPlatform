@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-
-import { BranchData } from 'app/branch/branch.component';
+import { BranchData } from '../branch/branch.component';
 import { MatTableDataSource } from '@angular/material';
 
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
+import { AngularFireStorage } from 'angularfire2/storage';
 
 declare var require: any;
 
@@ -45,7 +46,7 @@ export class ProductComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;files  = [];  
 
-  constructor() {
+  constructor(private storage: AngularFireStorage) {
       const products = dataProduct;
       this.dataSource = new MatTableDataSource(products);
       this.dataSource.filterPredicate = (data, filter) => {
@@ -110,8 +111,40 @@ export class ProductComponent implements OnInit {
     fileUpload.click();
   }
 
+  saveBlob(blob, fileName) {
+    const a = document.createElement('a');
+    a.href = window.URL.createObjectURL(blob);
+    a.download = fileName;
+    a.dispatchEvent(new MouseEvent('click'));
+}
+
   downloadTemplate() {
     console.log('downloading template');
+    // Create a reference with an initial file path and name
+    const storage = this.storage;
+    const templatePathReference = storage.ref('templates/add_medicines_template.xlsx');
+
+    templatePathReference.getDownloadURL().subscribe(url => {
+      console.log('url: ', url);
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function(event) {
+        // Gets file in blob format
+        const blob = xhr.response;
+        // Creates and element to download the file
+        const p = document.createElement('p');
+        const a = document.createElement('a');
+        p.appendChild(a);
+        a.href = window.URL.createObjectURL(blob);
+        a.download = 'plantilla_agregar_productos.xlsx';
+        a.dispatchEvent(new MouseEvent('click'));
+        // Removes an element from the document
+        p.removeChild(a);
+      };
+      xhr.open('GET', url);
+      xhr.send();
+    });
+
   }
 
   applyFilter(event: Event) {

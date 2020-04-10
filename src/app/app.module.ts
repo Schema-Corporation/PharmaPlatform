@@ -20,14 +20,9 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AgmCoreModule } from '@agm/core';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { environment } from '../environments/environment';
-
-const googleMapsParams = {
-  apiKey: environment.GOOGLE_MAPS_API_KEY,
-  libraries: ['places'],
-  language: 'es',
-  // region: 'DE'
-};
 
 @NgModule({
   declarations: [
@@ -48,7 +43,9 @@ const googleMapsParams = {
     RouterModule.forRoot(AppRoutes),
     MatGoogleMapsAutocompleteModule,
     NgxMaterialTimepickerModule,
-    AgmCoreModule.forRoot(googleMapsParams)
+    AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
+    AngularFireModule.initializeApp(environment.FIREBASE_CONFIG),
+    AngularFireStorageModule
   ],
   providers: [
     {

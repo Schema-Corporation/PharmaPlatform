@@ -11,13 +11,6 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 
-const googleMapsParams = {
-  apiKey: environment.GOOGLE_MAPS_API_KEY,
-  libraries: ['places'],
-  language: 'es',
-};
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -26,7 +19,7 @@ const googleMapsParams = {
     MatGoogleMapsAutocompleteModule,
     NgxMaterialTimepickerModule.setLocale('es-419'),
     RouterModule.forChild(AddBranchRoutes),
-    AgmCoreModule.forRoot(googleMapsParams),
+    AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
     FormsModule
   ],
   declarations: [AddBranchComponent]

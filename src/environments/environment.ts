@@ -5,5 +5,19 @@
 
 export const environment = {
   production: false,
-  GOOGLE_MAPS_API_KEY: 'AIzaSyAD2irnyqiMg9rTjc0PEYRN7rlXRKxENjA'
+  GOOGLE_MAPS_CONFIG: {
+    apiKey: 'AIzaSyAD2irnyqiMg9rTjc0PEYRN7rlXRKxENjA',
+    libraries: ['places'],
+    language: 'es'
+  },
+  FIREBASE_CONFIG: {
+    apiKey: 'AIzaSyB9BLy7TI0fRutI1TmiT_0sJjQhnIL5U_Q',
+    authDomain: 'pharmapp-dev.firebaseapp.com',
+    databaseURL: 'https://pharmapp-dev.firebaseio.com',
+    projectId: 'pharmapp-dev',
+    storageBucket: 'pharmapp-dev.appspot.com',
+    messagingSenderId: '601968913327',
+    appId: '1:601968913327:web:b1085287e850522e649d5a',
+    measurementId: 'G-3EL52RP9XD'
+  }
 };
