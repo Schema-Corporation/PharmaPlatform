@@ -35,13 +35,12 @@ export class AddBranchComponent implements OnInit {
     this.branch.address = result.formatted_address;
     //this.address = result.formatted_address;
     this.isValidAddress = true;
+    console.log("Result: ", result);
   }
 
   onLocationSelected(location: Location) {
     this.branch.latitude = location.latitude;
     this.branch.longitude = location.longitude;
-    //this.latitude = location.latitude;
-    //this.longitude = location.longitude;
   }
 
   validateOpenTime() {
@@ -62,7 +61,7 @@ export class AddBranchComponent implements OnInit {
     if (this.validBranch()) {
       MySweetAlert.showSuccess("La sucursal ha sido agregada con éxito");
     } else {
-      MySweetAlert.showError("Complete los campos obligatorios");
+      MySweetAlert.showError("Por favor, complete los campos obligatorios");
     }
   }
 

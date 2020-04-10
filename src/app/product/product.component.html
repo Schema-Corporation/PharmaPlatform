@@ -3,39 +3,56 @@
         <div>
             <div>
                 <mat-card-title>Productos</mat-card-title>
-                 <mat-card-subtitle>Lista de Productos</mat-card-subtitle> 
-             </div>
-             
-             <div>
-                 <mat-label>Tipos de Productos</mat-label>
-                 <mat-select style="margin-top: 10px;">
-                     <mat-option *ngFor = "let producttype of producttypes" [value] = "producttype.id">
-                        {{producttype.name}}
-                     </mat-option>
-                 </mat-select>
-             </div>
-             <div style="margin-top: 15px;">
-                <mat-label >Farmacias</mat-label>
-                 <mat-select style="margin-top: 10px;">
-                     <mat-option *ngFor = "let branch of branches" [value] = "branch.id">
+                <mat-card-subtitle>Lista de Productos</mat-card-subtitle> 
+            </div>
+            <div>
+                <mat-form-field class="full-width p-b-0">
+                    <mat-label>Seleccione una farmacia</mat-label>
+                    <mat-select (selectionChange)="getProductsFromBranch($event)">
+                        <mat-option *ngFor = "let branch of branches" [value] = "branch">
                         {{branch.name}}
-                     </mat-option>
-                 </mat-select>
-             
-             
-                 <div class="mat-elevation-z8 m-t-10" style="margin-top: 35px;">
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="showProductsTable">
+                <div class="m-t-20">
+                    <mat-form-field>
+                        <mat-label>Filtro</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Busque un producto">
+                    </mat-form-field>
+                </div>
+                <div class="mat-elevation-z8" style="margin-top: 40px;">
+                    <div>
+                        <button class="pull-right" mat-mini-fab [routerLink]="['/add_product']" [matTooltipPosition]="'above'" matTooltip="Agregar producto">
+                            <mat-icon>add_shopping_cart</mat-icon>
+                        </button>
+                        <button class="pull-right" mat-mini-fab (click)="importProducts()" [matTooltipPosition]="'above'" matTooltip="Importar productos">
+                            <mat-icon>file_copy</mat-icon>
+                        </button>
+                        <button class="pull-right" mat-mini-fab (click)="downloadTemplate()" [matTooltipPosition]="'above'" matTooltip="Descargar formato">
+                            <mat-icon>archive</mat-icon>
+                        </button>
+                        <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display:none;" />
+                    </div>
                     <table mat-table [dataSource] = "dataSource" matSort style="table-layout: fixed; width:100%;">
-
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="name" style= "margin-right: 75%;">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-                        </ng-container>
 
                         <!-- Code Column -->
                         <ng-container matColumnDef="code" style= "margin-left: 75%;">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
-                        <td mat-cell *matCellDef="let row"> {{row.code}} </td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+                            <td mat-cell *matCellDef="let row"> {{row.code}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name" style= "margin-right: 75%;">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                        </ng-container>
+
+                        <!-- ProductType Column -->
+                        <ng-container matColumnDef="productType">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+                            <td mat-cell *matCellDef="let row"> {{row.productType.name}} </td>
                         </ng-container>
 
                         <!-- Stock Column -->
@@ -44,24 +61,21 @@
                         <td mat-cell *matCellDef="let row"> {{row.stock}} </td>
                         </ng-container>
 
-                        <!-- ProductType Column -->
-                        <ng-container matColumnDef="productType">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
-                        <td mat-cell *matCellDef="let row"> {{row.productType.name}} </td>
-                        </ng-container>
-
                         <!-- Branch Column -->
+                        <!--
                         <ng-container matColumnDef="branch">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Local </th>
                         <td mat-cell *matCellDef="let row"> {{row.branch.name}} </td>
                         </ng-container>
+                        -->
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                         </tr>
                     </table>
-                 </div>
-             </div>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>
