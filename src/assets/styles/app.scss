@@ -688,6 +688,12 @@ Rounds
 .btn-lg{
     line-height: 48px!important;
 }
+.btn-block-login{
+    
+    display: block;
+    width: 100%;
+    height:54px;
+}
 /*******************
 froms
 *******************/
@@ -704,6 +710,13 @@ froms
 .mat-form-field{
    width: 100%;
 }
+
+.form-login{
+    display: block;
+    min-width: 100%;
+    max-width: 300px;
+    width: 100%;
+}
 /*******************
 Mat card
 *******************/
@@ -711,9 +724,14 @@ Mat card
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05)!important;  
     -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05)!important; 
     margin: 15px;
-    padding: 0px!important;
+    padding: 0px;
     border-radius: $radius;
     
+    .mat-card-content-login{
+        font-size:1rem;
+        line-height: 23px;
+        padding: 0 !important;    
+    }
     .mat-card-content{
         font-size:1rem;
         line-height: 23px;
@@ -723,6 +741,16 @@ Mat card
         width: calc(100% + 0px);
         margin: 0 0px 0px 0px;
     }
+    .mat-card-header-display{
+        display: flex;
+        flex-direction: row;
+
+    }
+    .mat-card-header-text{
+        margin: 0;
+        width: 100%;
+        text-align: center;
+    }
     .mat-card-header{
         padding: 12px;
         border-radius: $radius $radius 0 0;
@@ -730,6 +758,7 @@ Mat card
             margin-bottom: 2px;
             font-size: 20px;
         }
+        
         .mat-card-subtitle, .mat-card-subtitle:not(:first-child){
             margin-bottom: 0px;
             margin-top: 0px;
@@ -756,6 +785,40 @@ Mat card
     }
 }
 
+.box {
+    position: relative;
+    top: 0;
+    opacity: 1;
+    float: left;
+    padding: 40px 70px 50px !important;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    z-index: 5;
+    max-width: 430px;
+  }
+
+  .login-wrapper{
+    height: 100%;
+  }
+
+.box:before {
+    content: "";
+    width: 100%;
+    height: 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: -10px;
+    background: rgba(255, 255, 255, .6);
+    left: 0;
+    transform: scale(.95);
+    -webkit-transform: scale(.95);
+    -ms-transform: scale(.95);
+    z-index: -1;
+}
 /*******************
 Grid
 *******************/
@@ -884,4 +947,14 @@ list inline
             }
         }
     }
+}
+
+
+.example-login{
+	background-image: url('assets/images/login/pharmacy-4.jpg');
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:cover;
+	height:100vh;
+	width:100%;
 }
