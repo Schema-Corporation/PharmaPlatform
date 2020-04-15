@@ -24,7 +24,7 @@
                 </div>
                 <div class="mat-elevation-z8" style="margin-top: 40px;">
                     <div>
-                        <button class="pull-right" mat-mini-fab [routerLink]="['/add_product']" [matTooltipPosition]="'above'" matTooltip="Agregar producto">
+                        <button class="pull-right" mat-mini-fab [routerLink]="['/add_product/', selectedBranch.id]" [matTooltipPosition]="'above'" matTooltip="Agregar producto">
                             <mat-icon>add_shopping_cart</mat-icon>
                         </button>
                         <button class="pull-right" mat-mini-fab (click)="importProducts()" [matTooltipPosition]="'above'" matTooltip="Importar productos">
@@ -68,6 +68,17 @@
                         <td mat-cell *matCellDef="let row"> {{row.branch.name}} </td>
                         </ng-container>
                         -->
+
+                        <!-- Star Column -->
+                        <ng-container matColumnDef="star">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-button [routerLink]="['/edit_product']" [matTooltipPosition]="'above'" class="m-l-5" matTooltip="Editar">
+                                    <mat-icon>edit</mat-icon> </button>
+                                <button mat-button [matTooltipPosition]="'above'" class="m-l-5" matTooltip="Eliminar">
+                                    <mat-icon>delete_forever</mat-icon> </button>
+                            </td>
+                        </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;">

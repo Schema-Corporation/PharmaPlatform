@@ -35,8 +35,9 @@ export interface ProductData{
 })
 export class ProductComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'name', 'productType', 'stock'];
+  displayedColumns: string[] = ['code', 'name', 'productType', 'stock', 'star'];
   showProductsTable: boolean = false;
+  selectedBranch: any;
   dataSource: MatTableDataSource<ProductData>;
 
   producttypes: ProductTypeData[] = dataProductType;
@@ -51,7 +52,7 @@ export class ProductComponent implements OnInit {
       this.dataSource = new MatTableDataSource(products);
       this.dataSource.filterPredicate = (data, filter) => {
         const dataStr = data.code + data.name + data.productType.name + data.stock;
-        return dataStr.toLowerCase().indexOf(filter) != -1; 
+        return dataStr.toLowerCase().indexOf(filter) !== -1;
       };
    }
    
@@ -62,6 +63,7 @@ export class ProductComponent implements OnInit {
 
   getProductsFromBranch(obj) {
     console.log('$event', obj.value);
+    this.selectedBranch = obj.value;
     this.showProductsTable = true;
   }
 
