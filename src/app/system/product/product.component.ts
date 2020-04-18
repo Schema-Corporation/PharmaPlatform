@@ -10,7 +10,7 @@ import { AngularFireStorage } from 'angularfire2/storage';
 declare var require: any;
 
 const dataProductType: any = require('./data-product-type.json');
-const dataBranch: any = require('app/branch/data.json');
+const dataBranch: any = require('app/system/branch/data.json');
 const dataProduct: any = require('./data-product.json');
 
 export interface ProductTypeData{

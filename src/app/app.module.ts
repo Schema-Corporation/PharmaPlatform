@@ -17,6 +17,8 @@ import { AppSidebarComponent } from './system/layouts/full/sidebar/sidebar.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 
+import { SystemModule } from "./system/system.module";
+
 import { SharedModule } from './system/shared/shared.module';
 import { SpinnerComponent } from './system/shared/spinner.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
@@ -45,10 +47,13 @@ import { environment } from '../environments/environment';
     FlexLayoutModule,
     HttpClientModule,
     SharedModule,
+
+    
+
     AppRoutingModule,
-    MatGoogleMapsAutocompleteModule,
-    NgxMaterialTimepickerModule,
-    AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
+    //MatGoogleMapsAutocompleteModule,
+    //NgxMaterialTimepickerModule,
+    //AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
     AngularFireModule.initializeApp(environment.FIREBASE_CONFIG),
     AngularFireStorageModule
   ],

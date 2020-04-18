@@ -4,8 +4,8 @@ import {
   Location,
 } from "@angular-material-extensions/google-maps-autocomplete";
 import PlaceResult = google.maps.places.PlaceResult;
-import { IBranch } from "../../../common/types";
-import { MySweetAlert } from "../../../common/utils";
+import { IBranch } from "../../../../common/types";
+import { MySweetAlert } from "../../../../common/utils";
 
 @Component({
   selector: "app-add-branch",
