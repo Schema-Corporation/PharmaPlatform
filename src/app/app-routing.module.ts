@@ -1,19 +1,28 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PublicComponent } from './public/public.component';
-import { LoginComponent } from './public/login/login.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-const publicRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent }
-];
+/*const publicRoutes: Routes = [
+  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: "login", component: LoginComponent },
+];*/
+
 export const mainRoutes: Routes = [
-  { path: '', redirectTo: 'public', pathMatch: 'full' },
-  { path: 'public', component: PublicComponent, children: publicRoutes }
-]
+  {
+    path: "system",
+    loadChildren: () =>
+      import("./system/system.module").then((module) => module.SystemModule),
+  },
+  {
+    path: "public",
+    loadChildren: () =>
+      import("./public/public.module").then((module) => module.PublicModule),
+  },
+  { path: "", redirectTo: "public", pathMatch: "full" },
+  { path: "**", redirectTo: "public" },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(mainRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

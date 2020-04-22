@@ -37,7 +37,7 @@ import { environment } from '../environments/environment';
     LoginComponent,
     AppHeaderComponent,
     SpinnerComponent,
-    AppSidebarComponent
+    AppSidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,15 +47,12 @@ import { environment } from '../environments/environment';
     FlexLayoutModule,
     HttpClientModule,
     SharedModule,
-
-    
-
     AppRoutingModule,
     //MatGoogleMapsAutocompleteModule,
     //NgxMaterialTimepickerModule,
     //AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
     AngularFireModule.initializeApp(environment.FIREBASE_CONFIG),
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
   providers: [
     {

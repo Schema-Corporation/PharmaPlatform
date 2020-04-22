@@ -19,6 +19,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { SystemRoutingModule } from './system-routing.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { FormsModule } from '@angular/forms';
     NgxMaterialTimepickerModule.setLocale('es-419'),
     AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
     FormsModule,
-    RouterModule.forChild(systemRoutes),
+    //RouterModule.forChild(systemRoutes),
+    SystemRoutingModule
   ]
 })
 export class SystemModule { }
