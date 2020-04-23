@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { DemoMaterialModule } from '../../demo-material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BranchComponent } from './branch.component';
-import { BranchRoutes } from './branch.routing';
 import { ChartistModule } from 'ng-chartist';
 
 @NgModule({
@@ -13,7 +12,6 @@ import { ChartistModule } from 'ng-chartist';
     DemoMaterialModule,
     FlexLayoutModule,
     ChartistModule,
-    RouterModule.forChild(BranchRoutes)
   ],
   declarations: [BranchComponent]
 })

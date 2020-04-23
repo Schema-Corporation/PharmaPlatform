@@ -11,7 +11,7 @@
                     <input matInput (keyup)="applyFilter($event)" placeholder="Busque un local">
                 </mat-form-field>
                 <div class="mat-elevation-z8 m-t-10">
-                    <button class="pull-right" mat-mini-fab [routerLink]="['/add_branch']" [matTooltipPosition]="'above'" matTooltip="Agregar local">
+                    <button class="pull-right" mat-mini-fab [routerLink]="['/system/addbranch']" [matTooltipPosition]="'above'" matTooltip="Agregar local">
                         <mat-icon>add_to_queue</mat-icon>
                     </button>
                     <table mat-table [dataSource]="dataSource" matSort>
