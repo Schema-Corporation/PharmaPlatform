@@ -14,36 +14,43 @@ import { StatisticsComponent } from "./statistics/statistics.component";
 
 import { DemoMaterialModule } from '../demo-material-module';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-import { ChartistModule } from 'ng-chartist';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { SystemRoutingModule } from './system-routing.module';
+import { SpinnerComponent } from './shared/spinner.component';
+
+import { FullComponent } from './layouts/full/full.component';
+import { AppHeaderComponent } from './layouts/full/header/header.component';
+import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     SystemComponent,
-
-    
+    FullComponent,
     BranchComponent,
     AddBranchComponent,
     DashboardComponent,
     ProductComponent,
     AddProductComponent,
-    StatisticsComponent
-
+    StatisticsComponent,
+    AppHeaderComponent,
+    AppSidebarComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
     DemoMaterialModule,
     MatGoogleMapsAutocompleteModule,
-    ChartistModule,
     NgxMaterialTimepickerModule.setLocale('es-419'),
     AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
     FormsModule,
     //RouterModule.forChild(systemRoutes),
     SystemRoutingModule
+  ],
+  exports: [
+    SpinnerComponent
   ]
 })
 export class SystemModule { }

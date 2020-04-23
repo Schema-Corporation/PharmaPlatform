@@ -9,11 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FullComponent } from './system/layouts/full/full.component';
 import { PublicComponent } from './public/public.component';
 import { LoginComponent } from './public/login/login.component';
-import { AppHeaderComponent } from './system/layouts/full/header/header.component';
-import { AppSidebarComponent } from './system/layouts/full/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 
@@ -32,12 +29,8 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    FullComponent,
     PublicComponent,
-    LoginComponent,
-    AppHeaderComponent,
-    SpinnerComponent,
-    AppSidebarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +41,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     SharedModule,
     AppRoutingModule,
+    SystemModule,
     //MatGoogleMapsAutocompleteModule,
     //NgxMaterialTimepickerModule,
     //AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),

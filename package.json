@@ -35,7 +35,7 @@
     "core-js": "^2.6.11",
     "firebase": "^7.14.0",
     "hammerjs": "^2.0.8",
-    "ng-chartist": "4.1.0",
+    "ng-chartist": "^4.1.0",
     "ngx-material-timepicker": "^5.5.1",
     "node-sass": "^4.13.1",
     "promise-polyfill": "^8.1.3",
