@@ -17,8 +17,8 @@ export const mainRoutes: Routes = [
     loadChildren: () =>
       import("./public/public.module").then((module) => module.PublicModule),
   },
-  { path: "", redirectTo: "public", pathMatch: "full" },
-  { path: "**", redirectTo: "public" },
+  { path: "", redirectTo: "public/login", pathMatch: "full" },
+  { path: "**", redirectTo: "public/login" },
 ];
 
 @NgModule({
