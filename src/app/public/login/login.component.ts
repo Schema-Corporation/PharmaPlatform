@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
 
   public userName: string;
   public password: string;
+  isLoggedIn = false;
+  isLoginFailed = false;
 
   constructor(
     private  _loginService:  LoginService,
@@ -20,15 +22,25 @@ export class LoginComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    console.log(this._loginService.getToken())
+    if (this._loginService.getToken()) {
+      this.isLoggedIn=true;
+      this.router.navigateByUrl('/system/branch');
+    }
   }
 
   login() {
     this._loginService.login(this.userName, this.password)
     .then(x => {
-      console.log('x: ', x);
-      this.router.navigate(['/system/branch']);
+      this._loginService.saveToken('token');
+      this._loginService.saveUser('user');
+      this.isLoginFailed = false;
+      this.isLoggedIn=true;
+      this.toDashBoard();
+      
     }).catch(error => {
       if (error.code) {
+        this.isLoginFailed = true;
         const errorCode = error.code;
         let errorMessage = '';
         switch (errorCode) {
@@ -42,6 +54,10 @@ export class LoginComponent implements OnInit {
         MySweetAlert.showError('Ocurrió un error inesperado. Contacte con el administrador');
       }
     });
+  }
+
+  toDashBoard() {
+    this.router.navigateByUrl('/system/branch');
   }
 
 }

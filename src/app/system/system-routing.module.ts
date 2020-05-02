@@ -6,11 +6,10 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProductComponent } from "./product/product.component";
 import { AddProductComponent } from "./product/add-product/add-product.component";
 import { StatisticsComponent } from "./statistics/statistics.component";
-import { SystemComponent } from './system.component'
 import { FullComponent } from './layouts/full/full.component'
+import { ProfileComponent } from './profile/profile.component'
 
 const systemRoutes: Routes = [
-  //{ path: "", redirectTo: "branch", pathMatch: "full" },
   {
   path: '',
   component: FullComponent,
@@ -18,6 +17,7 @@ const systemRoutes: Routes = [
     { path: "branch", component: BranchComponent },
     { path: "addbranch", component: AddBranchComponent },
     { path: "dashboard", component: DashboardComponent },
+    { path: "profile", component: ProfileComponent },
     { path: "product", component: ProductComponent },
     { path: "addproduct", component: AddProductComponent },
     { path: "statistics", component: StatisticsComponent },

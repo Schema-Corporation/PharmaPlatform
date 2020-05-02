@@ -11,6 +11,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProductComponent } from "./product/product.component";
 import { AddProductComponent } from "./product/add-product/add-product.component";
 import { StatisticsComponent } from "./statistics/statistics.component";
+import { ProfileComponent } from './profile/profile.component'
 
 import { DemoMaterialModule } from '../demo-material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -39,6 +40,7 @@ import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
     StatisticsComponent,
     AppHeaderComponent,
     AppSidebarComponent,
+    ProfileComponent,
     SpinnerComponent
   ],
   imports: [
