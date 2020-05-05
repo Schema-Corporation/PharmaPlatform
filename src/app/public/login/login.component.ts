@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { MySweetAlert } from '../../../common/utils';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private  _loginService:  LoginService,
+    private _authService: AuthService,
     private router: Router
     ) { }
 
@@ -29,13 +31,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  storeFirebaseLoginInfo(token) {
+    this._loginService.saveToken(token);
+    this.validateUser();
+  }
+
   login() {
     this._loginService.login(this.userName, this.password)
-    .then(x => {
-      this._loginService.saveToken('token');
-      this._loginService.saveUser('user');
-      this.isLoginFailed = false;
-      this.isLoggedIn=true;
+    .then(firebaseData => {
+      this._loginService.saveUser(firebaseData.user.email);
+      firebaseData.user.getIdToken().then(token => {
+          this.storeFirebaseLoginInfo(token)
+        }
+      );
       this.toDashBoard();
       
     }).catch(error => {
@@ -60,4 +68,14 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('/system/branch');
   }
 
+
+  validateUser() {
+    this._authService.getInfoUser().subscribe(
+      data => {
+        console.log('data: ', data);
+        this.isLoginFailed = false;
+        this.isLoggedIn=true;
+      }
+    );
+  }
 }
