@@ -25,6 +25,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { environment } from '../environments/environment';
+import { AuthService } from './utils/auth';
 
 @NgModule({
   declarations: [
@@ -42,9 +43,6 @@ import { environment } from '../environments/environment';
     SharedModule,
     AppRoutingModule,
     SystemModule,
-    //MatGoogleMapsAutocompleteModule,
-    //NgxMaterialTimepickerModule,
-    //AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
     AngularFireModule.initializeApp(environment.FIREBASE_CONFIG),
     AngularFireStorageModule,
   ],
@@ -53,8 +51,9 @@ import { environment } from '../environments/environment';
       provide: LocationStrategy,
       useClass: PathLocationStrategy
     },
-    AngularFireAuth
+    AngularFireAuth,AuthService
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule {}

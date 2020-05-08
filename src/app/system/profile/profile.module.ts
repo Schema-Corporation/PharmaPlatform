@@ -3,8 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DemoMaterialModule } from '../../demo-material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { BranchComponent } from './branch.component';
-
+import { ProfileComponent } from './profile.component';
 
 @NgModule({
   imports: [
@@ -12,6 +11,6 @@ import { BranchComponent } from './branch.component';
     DemoMaterialModule,
     FlexLayoutModule
   ],
-  declarations: [BranchComponent]
+  declarations: [ProfileComponent]
 })
-export class BranchModule {}
+export class ProfileModule {}

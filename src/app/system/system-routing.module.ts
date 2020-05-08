@@ -6,8 +6,8 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProductComponent } from "./product/product.component";
 import { AddProductComponent } from "./product/add-product/add-product.component";
 import { StatisticsComponent } from "./statistics/statistics.component";
-import { SystemComponent } from './system.component'
 import { FullComponent } from './layouts/full/full.component'
+import { ProfileComponent } from './profile/profile.component'
 
 const systemRoutes: Routes = [
   {

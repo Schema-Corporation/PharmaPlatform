@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AuthService } from "./utils/auth";
 
 /*const publicRoutes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
@@ -11,6 +12,7 @@ export const mainRoutes: Routes = [
     path: "system",
     loadChildren: () =>
       import("./system/system.module").then((module) => module.SystemModule),
+      canActivate: [AuthService],
   },
   {
     path: "public",

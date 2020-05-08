@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { MySweetAlert } from '../../../common/utils';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,22 +14,41 @@ export class LoginComponent implements OnInit {
 
   public userName: string;
   public password: string;
+  isLoggedIn = false;
+  isLoginFailed = false;
 
   constructor(
     private  _loginService:  LoginService,
+    private _authService: AuthService,
     private router: Router
     ) { }
 
   ngOnInit(): void {
+    console.log(this._loginService.getToken())
+    if (this._loginService.getToken()) {
+      this.isLoggedIn=true;
+      this.router.navigateByUrl('/system/branch');
+    }
+  }
+
+  storeFirebaseLoginInfo(token) {
+    this._loginService.saveToken(token);
+    this.validateUser();
   }
 
   login() {
     this._loginService.login(this.userName, this.password)
-    .then(x => {
-      console.log('x: ', x);
-      this.router.navigate(['/system/branch']);
+    .then(firebaseData => {
+      this._loginService.saveUser(firebaseData.user.email);
+      firebaseData.user.getIdToken().then(token => {
+          this.storeFirebaseLoginInfo(token)
+        }
+      );
+      this.toDashBoard();
+      
     }).catch(error => {
       if (error.code) {
+        this.isLoginFailed = true;
         const errorCode = error.code;
         let errorMessage = '';
         switch (errorCode) {
@@ -44,4 +64,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  toDashBoard() {
+    this.router.navigateByUrl('/system/branch');
+  }
+
+
+  validateUser() {
+    this._authService.getInfoUser().subscribe(
+      data => {
+        console.log('data: ', data);
+        this.isLoginFailed = false;
+        this.isLoggedIn=true;
+      }
+    );
+  }
 }
