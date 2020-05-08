@@ -10,20 +10,19 @@ import { SystemComponent } from './system.component'
 import { FullComponent } from './layouts/full/full.component'
 
 const systemRoutes: Routes = [
-  //{ path: "", redirectTo: "branch", pathMatch: "full" },
   {
   path: '',
   component: FullComponent,
   children: [
-    { path: "branch", component: BranchComponent },
-    { path: "addbranch", component: AddBranchComponent },
-    { path: "dashboard", component: DashboardComponent },
-    { path: "product", component: ProductComponent },
-    { path: "addproduct", component: AddProductComponent },
-    { path: "statistics", component: StatisticsComponent },
+    { path: 'branch', component: BranchComponent },
+    { path: 'add-branch', component: AddBranchComponent },
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'product', component: ProductComponent },
+    { path: 'add-product/:branchId', component: AddProductComponent },
+    { path: 'statistics', component: StatisticsComponent },
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'branch',
       pathMatch: 'full',
     },
   ]

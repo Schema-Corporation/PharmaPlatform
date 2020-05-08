@@ -12,10 +12,10 @@ import { StatisticsComponent } from "./statistics/statistics.component";
 
 const systemChildren: Routes = [
     { path: 'branch', component: BranchComponent },
-    { path: 'addbranch', component: AddBranchComponent },
+    { path: 'add-branch', component: AddBranchComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'product', component: ProductComponent },
-    { path: 'addproduct', component: AddProductComponent },
+    { path: 'add-product/:branchId', component: AddProductComponent },
     { path: 'statistics', component: StatisticsComponent }
 ]
 
