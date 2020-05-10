@@ -19,6 +19,6 @@ export class AuthService {
   ) {}
 
   getInfoUser(): Observable<any> {
-    return this.apiMiddleware.doPOST(URL + "authentication");
+    return this.apiMiddleware.doPOST(URL + "/authentication");
   }
 }

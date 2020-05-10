@@ -8,5 +8,5 @@ export interface IBranch {
     longitude?: number;
     opensAt?: string;
     closesAt?: string;
-
+    addressName?: string;
 }

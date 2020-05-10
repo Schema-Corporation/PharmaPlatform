@@ -6,16 +6,18 @@ import { ChartType, ChartEvent } from 'ng-chartist';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { BranchService } from "../../service/branch/branch.service";
 
 declare var require: any;
 
-const data: any = require('./data.json');
+//const data: any = require('./data.json');
 
 export interface BranchData {
 	id: number;
 	name: string;
-	address: string;
+	addressName: string;
 	schedule: string;
+	status: string;
   }
 
 @Component({
@@ -25,22 +27,35 @@ export interface BranchData {
 })
 export class BranchComponent implements OnInit  {
 
-	displayedColumns: string[] = ['name', 'address', 'schedule', 'status', 'star'];
+	displayedColumns: string[] = ['name', 'addressName', 'schedule', 'status', 'star'];
   	dataSource: MatTableDataSource<BranchData>;
+
+	
 
 	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	@ViewChild(MatSort, {static: true}) sort: MatSort;
 
-	constructor() {
-		const branches = data;
+	constructor(
+		private _branchService: BranchService
+		) {
 
+		this.dataSource = new MatTableDataSource([]);
+		
 		// Assign the data to the data source for the table to render
-		this.dataSource = new MatTableDataSource(branches);
 	}
 
 	ngOnInit() {
+		var id = JSON.parse(localStorage.getItem('companyId'));
+		this._branchService.getBranchesById(id).subscribe(
+			data => {
+				const branches = data;
+				this.dataSource = new MatTableDataSource(branches);
+				
+			}
+		);
 		this.dataSource.paginator = this.paginator;
 		this.dataSource.sort = this.sort;
+		
 	}
 
 	applyFilter(event: Event) {

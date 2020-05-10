@@ -7,8 +7,12 @@ table {
     width: 100%;
   }
   
-td, th {
-    width: 20%;
+//td, th {
+//    width: 20%;
+//}
+
+status {
+  width: auto !important;
 }
 
 .pull-right {
