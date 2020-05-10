@@ -25,7 +25,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireStorageModule } from "angularfire2/storage";
 import { environment } from "../environments/environment";
 import { AuthService } from "./utils/auth";
-import { APIMiddleware } from "./service/apiMiddleware";
+import { APIMiddleware } from "./service/APIMiddleware";
 
 @NgModule({
   declarations: [AppComponent, PublicComponent, LoginComponent],

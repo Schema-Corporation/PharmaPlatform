@@ -2,10 +2,7 @@ import { Injectable } from "@angular/core";
 import { LoginService } from "../public/login/login.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { apiUrls } from "../../common/constants";
 
-//const URL = "http://localhost:8080/identity/authentication";
-const URL = apiUrls.AUTH;
 
 @Injectable()
 export class APIMiddleware {

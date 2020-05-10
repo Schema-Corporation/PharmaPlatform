@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { APIMiddleware } from '../APIMiddleware';
 
 const URL = "http://localhost:8081/pharmacies/branch";
 
@@ -12,17 +13,12 @@ export class BranchService {
   
   constructor(
     private http: HttpClient,
-    
+    public apiMiddleware: APIMiddleware
   ) { }
 
-  public saveBranch(branch): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem("token")
-      })
-    };
-    
-    return this.http.post(URL, branch, httpOptions)
+  public saveBranch(branch): Observable<any> { 
+    return this.apiMiddleware.doPOST(URL, branch);
   }
+
+  
 }

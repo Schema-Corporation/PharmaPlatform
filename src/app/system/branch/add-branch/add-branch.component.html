@@ -11,8 +11,12 @@
                     <div fxLayout="row wrap">
 
                         <mat-form-field class="full-width p-10" [appearance]="'standard'">
-                            <mat-label>Nombre</mat-label>
-                            <input matInput  placeholder="Escriba un nombre para el local">
+                            <mat-label>Nombre del local</mat-label>
+                            <input  name="name"
+                                    [(ngModel)]="branch.name"
+                                    matInput
+                                    required  
+                                    placeholder="Escriba un nombre para el local">
                         </mat-form-field>
 
                         <mat-form-field class="full-width p-10" [appearance]="'standard'">
