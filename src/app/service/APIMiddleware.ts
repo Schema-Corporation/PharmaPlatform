@@ -44,7 +44,7 @@ export class APIMiddleware {
     return this.http.put(url, body, httpOptions);
   }
 
-  doDELETE(url: string, body?: any): Observable<any> {
+  doDELETE(url: string): Observable<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
