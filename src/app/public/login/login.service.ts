@@ -52,4 +52,11 @@ export class LoginService {
     const user = JSON.parse(localStorage.getItem('user'));
     return (user !== null)? true : false;
   }
+
+  ////////////////
+  public saveCompanyId(data){
+    localStorage.removeItem('companyId');
+    localStorage.setItem('companyId', JSON.stringify(data));
+    console.log('companyId: ', localStorage.getItem('companyId')) //CAMBIAR POR COMPANY ID
+  }
 }

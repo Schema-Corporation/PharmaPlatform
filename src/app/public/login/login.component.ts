@@ -73,6 +73,8 @@ export class LoginComponent implements OnInit {
     this._authService.getInfoUser().subscribe(
       data => {
         console.log('data: ', data);
+        this._loginService.saveCompanyId(data.companyId); 
+        //console.log('companyName', )
         this.isLoginFailed = false;
         this.isLoggedIn=true;
       }

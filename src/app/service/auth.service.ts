@@ -14,8 +14,7 @@ export class AuthService {
   headers = new Headers();
 
   constructor(
-    public http: HttpClient,
-    public authService: LoginService
+    public http: HttpClient
   ) {
   
    }
