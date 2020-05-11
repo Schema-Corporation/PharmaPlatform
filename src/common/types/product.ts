@@ -5,7 +5,8 @@ export interface IProduct {
     id?: number;
     name?: string;
     code?: number;
+    useDescription?: string;
     stock?: number;
-    productType?: IProductType;
-    branch?: IBranch;
+    productTypeId?: string;
+    branchId?: string;
 }

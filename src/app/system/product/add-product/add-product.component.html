@@ -1,1 +1,62 @@
-<p>add-product works!</p>
+<mat-card>
+    <mat-card-content>
+        <div>
+            <div>
+                <mat-card-title>Agregar producto</mat-card-title>
+                    <mat-card-subtitle>Agrega un nuevo producto para tu local</mat-card-subtitle> 
+                </div>
+        </div>
+        <div>
+            <form>
+                <div fxLayout="row wrap">
+                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                        <mat-label>Código del producto</mat-label>
+                        <input  name="code"
+                                [(ngModel)]="product.code"
+                                matInput
+                                required  
+                                placeholder="Escriba un código para el producto">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row wrap">
+                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                        <mat-label>Nombre del producto</mat-label>
+                        <input  name="name"
+                                [(ngModel)]="product.name"
+                                matInput
+                                required  
+                                placeholder="Escriba un nombre para el producto">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row wrap">
+                    <mat-form-field class="full-width p-b-0">
+                        <mat-label>Seleccione una tipo de producto</mat-label>
+                        <mat-select required [(ngModel)]="product.productTypeId">
+                            <mat-option *ngFor = "let productType of productTypes" [value] = "productType.id">
+                            {{productType.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row wrap">
+                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                        <mat-label>Síntomas que alivia el producto</mat-label>
+                        <input  name="name"
+                                [(ngModel)]="product.useDescription"
+                                matInput
+                                required  
+                                placeholder="Tos, inflamación, dolor de garganta">
+                    </mat-form-field>
+                </div>
+                <div class="buttons-footer">
+                    <div class="pull-right">
+                        <button mat-raised-button color="primary" value="Registrar" (click)="registerProduct()">Registrar</button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+        
+
+    </mat-card-content>
+</mat-card>
