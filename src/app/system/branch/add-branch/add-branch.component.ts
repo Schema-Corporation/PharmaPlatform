@@ -6,6 +6,9 @@ import {
 import PlaceResult = google.maps.places.PlaceResult;
 import { IBranch } from "../../../../common/types";
 import { MySweetAlert } from "../../../../common/utils";
+import { BranchService } from "../../../service/branch/branch.service";
+import * as moment from 'moment'
+
 
 @Component({
   selector: "app-add-branch",
@@ -17,25 +20,39 @@ export class AddBranchComponent implements OnInit {
   public zoom: number;
 
   public branch: IBranch;
+  public infoBranch: IBranch;
 
   public isValidAddress: boolean = false;
   public isValidOpenTime: boolean = false;
   public isValidCloseTime: boolean = false;
 
-  constructor() {}
+
+
+  constructor(
+    private _branchService: BranchService
+  ) {}
 
   ngOnInit(): void {
     this.branch = {
       latitude: -12.119164,
       longitude: -77.029203,
     };
+    this.branch.companyId = JSON.parse(localStorage.getItem('companyId'));
   }
 
   onAutocompleteSelected(result: PlaceResult) {
     this.branch.address = result.formatted_address;
-    //this.address = result.formatted_address;
     this.isValidAddress = true;
-    console.log("Result: ", result);
+    var address_components = result.address_components;
+    for (var i in address_components) {
+      for (var j in address_components[i].types) {
+        if (address_components[i].types[j] == 'locality') {
+          var district = address_components[i].long_name;
+        }
+      }
+    }
+    
+    this.branch.districtName = district;
   }
 
   onLocationSelected(location: Location) {
@@ -47,6 +64,7 @@ export class AddBranchComponent implements OnInit {
     if (this.branch.opensAt) {
       this.isValidOpenTime = true;
     }
+    
     return false;
   }
 
@@ -58,8 +76,17 @@ export class AddBranchComponent implements OnInit {
   }
 
   registerBranch() {
+    
+    this.infoBranch = JSON.parse(JSON.stringify(this.branch));
+    this.processDateTime(this.infoBranch);
+
     if (this.validBranch()) {
-      MySweetAlert.showSuccess("La sucursal ha sido agregada con éxito");
+      this._branchService.saveBranch(this.infoBranch).subscribe(
+        data => {
+          //console.log('data', data);
+          MySweetAlert.showSuccess("La sucursal ha sido agregada con éxito");
+        }
+      );
     } else {
       MySweetAlert.showError("Por favor, complete los campos obligatorios");
     }
@@ -71,4 +98,12 @@ export class AddBranchComponent implements OnInit {
     }
     return false;
   }
+
+  processDateTime(infoBranch){
+    var processedOpensAt = moment(this.branch.opensAt, 'h:mm a').format('HH:mm:ss');
+    var processedClosesAt = moment(this.branch.closesAt, 'h:mm a').format('HH:mm:ss');
+    infoBranch.opensAt = processedOpensAt;
+    infoBranch.closesAt = processedClosesAt;
+  }
+  
 }
