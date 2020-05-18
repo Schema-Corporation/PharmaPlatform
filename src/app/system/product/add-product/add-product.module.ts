@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddProductComponent } from './add-product.component';
 import { FormsModule } from '@angular/forms';
 
+
 @NgModule({
   imports: [
     CommonModule,

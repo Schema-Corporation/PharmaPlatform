@@ -56,7 +56,7 @@ export class LoginService {
   ////////////////
   public saveCompanyId(data){
     localStorage.removeItem('companyId');
-    localStorage.setItem('companyId', JSON.stringify(data));
+    localStorage.setItem('companyId', data);
     //console.log('companyId: ', JSON.parse(localStorage.getItem('companyId')));
   }
 }

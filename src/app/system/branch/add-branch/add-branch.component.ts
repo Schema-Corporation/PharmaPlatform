@@ -37,7 +37,7 @@ export class AddBranchComponent implements OnInit {
       latitude: -12.119164,
       longitude: -77.029203,
     };
-    this.branch.companyId = JSON.parse(localStorage.getItem('companyId'));
+    this.branch.companyId = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
   }
 
   onAutocompleteSelected(result: PlaceResult) {

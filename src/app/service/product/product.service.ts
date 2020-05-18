@@ -5,7 +5,7 @@ import { APIMiddleware } from '../APIMiddleware';
 
 const URL = "http://localhost:8082/medicines/";
 const PRODUCT = "product"
-const PRODUCT_TYPES = "product_types"
+const PRODUCT_TYPES = "product-type"
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,9 @@ export class ProductService {
     return this.apiMiddleware.doPOST(URL + PRODUCT, product);
   }
 
+  public getProductByBranchId(branchId: string): Observable<any> {
+    return this.apiMiddleware.doGET(URL + "stock" + `?branchId=${branchId}`);
+  }
 
   public getProductTypes(): Observable<any> {
     return this.apiMiddleware.doGET(URL + PRODUCT_TYPES);

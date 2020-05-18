@@ -8,7 +8,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { BranchService } from "../../service/branch/branch.service";
 
-declare var require: any;
+//declare var require: any;
 
 //const data: any = require('./data.json');
 
@@ -45,7 +45,7 @@ export class BranchComponent implements OnInit  {
 	}
 
 	ngOnInit() {
-		var id = JSON.parse(localStorage.getItem('companyId'));
+		var id = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
 		this._branchService.getBranchesById(id).subscribe(
 			data => {
 				const branches = data;

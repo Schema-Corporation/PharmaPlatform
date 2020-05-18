@@ -6,27 +6,33 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 import { AngularFireStorage } from 'angularfire2/storage';
+import { BranchService } from '../../service/branch/branch.service';
+import { UploadService } from '../../service/upload/upload.service';
+import { ProductService } from '../../service/product/product.service';
 
-declare var require: any;
-
-const dataProductType: any = require('./data-product-type.json');
-const dataBranch: any = require('app/system/branch/data.json');
-const dataProduct: any = require('./data-product.json');
-
-export interface ProductTypeData{
-    id: number;
-    name: string;
+export interface BranchList {
+  id: string;
+  branchName: string;
 }
 
 export interface ProductData{
     id: number;
-    name: string;
+    productId: string;
+    commercialName: string;
     code: string;
     stock: number;
-    productType: ProductTypeData;
+    stockId: string;
+    productType: string;
     branch: BranchData;
-    
 }
+
+export interface BranchDataInfo {
+	id: number;
+	name: string;
+	addressName: string;
+	schedule: string;
+	status: string;
+  }
 
 @Component({
   selector: 'app-product',
@@ -40,31 +46,52 @@ export class ProductComponent implements OnInit {
   selectedBranch: any;
   dataSource: MatTableDataSource<ProductData>;
 
-  producttypes: ProductTypeData[] = dataProductType;
-  branches: BranchData[] = dataBranch;
+  branches: BranchList[];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;files  = [];  
 
-  constructor(private storage: AngularFireStorage) {
-      const products = dataProduct;
-      this.dataSource = new MatTableDataSource(products);
+  constructor(
+    private storage: AngularFireStorage,
+    private _branchService: BranchService,
+    private _uploadService: UploadService,
+    private _productService: ProductService
+    ) {
+      //const products = dataProduct;
+
+      this.dataSource = new MatTableDataSource([]);
       this.dataSource.filterPredicate = (data, filter) => {
-        const dataStr = data.code + data.name + data.productType.name + data.stock;
+        const dataStr = data.code + data.commercialName + data.productType + data.stock;
         return dataStr.toLowerCase().indexOf(filter) !== -1;
       };
    }
    
   ngOnInit(): void {
+    var id = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
+		this.getBranchesByCompanyId(id);
+    
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+  }
+
+  getBranchesByCompanyId(id){
+    this._branchService.getBranchNamesByCompanyId(id).subscribe(
+			data => {
+        this.branches = data;
+        console.log('data: ', data);
+
+			}
+    );
   }
 
   getProductsFromBranch(obj) {
+    
     console.log('$event', obj.value);
     this.selectedBranch = obj.value;
-    this.showProductsTable = true;
+    this.populateProductsByBranchId();
+    
   }
 
   private uploadFiles() {
@@ -76,29 +103,27 @@ export class ProductComponent implements OnInit {
 
   uploadFile(file) {
     const formData = new FormData();
-    formData.append('file', file.data);
+    formData.append('multipartFile', file.data);
     file.inProgress = true;
     console.log('formData: ', formData);
-    /*
-    this.uploadService.upload(formData).pipe(
-      map(event => {
-        switch (event.type) {
-          case HttpEventType.UploadProgress:
-            file.progress = Math.round(event.loaded * 100 / event.total);
-            break;
-          case HttpEventType.Response:
-            return event;
-        }
-      }),
-      catchError((error: HttpErrorResponse) => {
-        file.inProgress = false;
-        return of(`${file.data.name} upload failed.`);
-      })).subscribe((event: any) => {
-        if (typeof (event) === 'object') {
-          console.log(event.body);
-        }
-      });
-    */
+    
+    this._uploadService.saveFile(this.selectedBranch.id, formData).subscribe(
+      data => {
+        console.log('data: ', data);
+        this.populateProductsByBranchId();
+        
+      }
+    )
+  }
+
+  populateProductsByBranchId(){
+
+    this._productService.getProductByBranchId(this.selectedBranch.id).subscribe(
+      data => {
+        this.dataSource = new MatTableDataSource(data);
+        this.showProductsTable = true;
+      }
+    );
   }
 
   importProducts() {

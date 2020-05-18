@@ -40,4 +40,9 @@ export class BranchService {
     return this.http.get(URL+ `?companyId=${id}` , httpOptions);
     //return this.apiMiddleware.doGET(URL);
   }
+
+  getBranchNamesByCompanyId(id: string){
+    
+    return this.apiMiddleware.doGET(URL+ `/list?companyId=${id}`);
+  }
 }

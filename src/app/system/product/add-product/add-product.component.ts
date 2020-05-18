@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddProductComponent implements OnInit {
 
-  public product: IProduct;
+  public product: IProduct = {};
   public productTypes = [];
 
   constructor(private _productService: ProductService,
@@ -19,6 +19,7 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
     let branchId = this.route.snapshot.params.branchId;
     console.log('branchId: ', branchId);
+    this.getProductTypes();
   }
 
   registerProduct() {
