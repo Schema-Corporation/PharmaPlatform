@@ -76,6 +76,12 @@
                             placeholder="Tos, inflamación, dolor de garganta">
                         </mat-form-field>
                     </div>
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <img style="width: 250px; height: 170px;" [src]="urlImage">
+                    </div>
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <input type="file" accept=".png, .jpg" (change)="readUrl($event)">
+                    </div>              
                 </div>
 
                 <div fxLayout="row wrap">
