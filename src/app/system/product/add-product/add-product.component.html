@@ -9,65 +9,75 @@
         <div>
             <form>
                 <div fxLayout="row wrap">
-                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
-                        <mat-label>Código del producto</mat-label>
-                        <input  name="code"
-                                [(ngModel)]="product.code"
-                                matInput
-                                required  
-                                placeholder="Escriba un código para el producto">
-                    </mat-form-field>
+                    <!-- column -->    
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                            <mat-label>Código</mat-label>
+                            <input name="code" 
+                            matInput 
+                            required  
+                            [(ngModel)]="product.code"
+                            placeholder="Escriba un código para el producto">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                            <mat-label>Nombre de producto</mat-label>
+                            <input name="name"
+                             matInput 
+                             required 
+                             [(ngModel)]="product.name"
+                             placeholder="Escriba un nombre para el producto">
+                        </mat-form-field>
+                    </div>
                 </div>
                 <div fxLayout="row wrap">
-                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
-                        <mat-label>Nombre del producto</mat-label>
-                        <input  name="name"
-                                [(ngModel)]="product.name"
-                                matInput
-                                required  
-                                placeholder="Escriba un nombre para el producto">
-                    </mat-form-field>
+                    <!-- column -->    
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                            <mat-label>Nombre del laboratorio del producto</mat-label>
+                            <input name="labName"
+                            [(ngModel)]="product.labName"
+                            matInput
+                            required  
+                            placeholder="Escriba el nombre para el laboratorio">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                            <mat-label>Stock</mat-label>
+                            <input name="stock"
+                            [(ngModel)]="product.stock"
+                            matInput
+                            required  
+                            placeholder="Escriba el stock">
+                        </mat-form-field>
+                    </div>
                 </div>
+                
                 <div fxLayout="row wrap">
-                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
-                        <mat-label>Nombre de laboratorio del producto</mat-label>
-                        <input  name="labName"
-                                [(ngModel)]="product.labName"
-                                matInput
-                                required  
-                                placeholder="Escriba un nombre para el producto">
-                    </mat-form-field>
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-form-field class="full-width p-10 select-padding">
+                            <mat-label >Seleccione una tipo de producto</mat-label>
+                            <mat-select class="input-padding" name="productType" required [(ngModel)]="product.productTypeId">
+                                <mat-option *ngFor = "let productType of productTypes" [value] = "productType.id">
+                                {{productType.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                        <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                            <mat-label>Síntomas que alivia el producto</mat-label>
+                            <input name="useDescription"
+                            [(ngModel)]="product.useDescription"
+                            matInput
+                            required  
+                            placeholder="Tos, inflamación, dolor de garganta">
+                        </mat-form-field>
+                    </div>
                 </div>
-                <div fxLayout="row wrap">
-                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
-                        <mat-label>Stock</mat-label>
-                        <input  name="stock"
-                                [(ngModel)]="product.stock"
-                                matInput
-                                required  
-                                placeholder="Escriba un nombre para el producto">
-                    </mat-form-field>
-                </div>
-                <div fxLayout="row wrap">
-                    <mat-form-field class="full-width p-b-0">
-                        <mat-label>Seleccione una tipo de producto</mat-label>
-                        <mat-select name="productType" required [(ngModel)]="product.productTypeId">
-                            <mat-option *ngFor = "let productType of productTypes" [value] = "productType.id">
-                            {{productType.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div fxLayout="row wrap">
-                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
-                        <mat-label>Síntomas que alivia el producto</mat-label>
-                        <input  name="useDescription"
-                                [(ngModel)]="product.useDescription"
-                                matInput
-                                required  
-                                placeholder="Tos, inflamación, dolor de garganta">
-                    </mat-form-field>
-                </div>
+                
                 <div class="buttons-footer">
                     <div class="pull-right">
                         <button mat-raised-button color="primary" value="Registrar" (click)="registerProduct()">Registrar</button>
