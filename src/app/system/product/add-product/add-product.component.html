@@ -77,22 +77,18 @@
                         </mat-form-field>
                     </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
-                        <img style="width: 250px; height: 170px;" [src]="urlImage">
+                        <img *ngIf="show" style="width: 170px; height: 170px; padding: 10px;" class="centerImg" src="https://simpleicon.com/wp-content/uploads/cloud-upload-1.png">
+                        <img *ngIf="!show" style="width: 250px; height: 170px; padding: 10px;" class="centerImg" [src]="urlImage">
                     </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
-                        <input type="file" accept=".png, .jpg" (change)="readUrl($event)">
+                        <div class="p-10">
+                            <button id="uploadButton" class="md-fab md-mini" (click)="uploadImg()" mat-mini-fab >
+                                <mat-icon>attach_file</mat-icon>
+                            </button>
+                            <input type="file" #fileUpload id="fileUpload" name="fileUpload" (change)="readUrl($event)" accept=".png, .jpg" style="display:none;">
+                            <label for="input-file-id" class="md-button md-raised md-primary p-10">Choose Files</label>
+                        </div>
                     </div>              
-                </div>
-
-                <div fxLayout="row wrap">
-                    
-                    <div>
-                        <button id="uploadButton" class="md-fab md-mini" mat-mini-fab >
-                            <mat-icon>attach_file</mat-icon>
-                        </button>
-                    </div>
-                    <input class="ng-hide" id="input-file-id" multiple type="file" style="display:none;"/>
-                    <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
                 </div>
                 
                 <div class="buttons-footer">

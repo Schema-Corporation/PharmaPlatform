@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProductService } from "../../../service/product/product.service";
 import { IProduct } from "../../../../common/types";
 import { ActivatedRoute } from '@angular/router';
@@ -11,9 +11,12 @@ import { AngularFireStorage } from '@angular/fire/storage';
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent implements OnInit {
+  show: boolean = true;
 	urlImage: Observable<string>;
   public product: IProduct = {};
   public productTypes = [];
+
+  @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;
 
   constructor(
   private _productService: ProductService,
@@ -24,6 +27,7 @@ export class AddProductComponent implements OnInit {
     let branchId = this.route.snapshot.params.branchId;
     console.log('branchId: ', branchId);
     this.getProductTypes();
+    //this.urlImage = {"https://simpleicon.com/wp-content/uploads/cloud-upload-1.png"};
   }
 
   registerProduct() {
@@ -44,11 +48,18 @@ export class AddProductComponent implements OnInit {
     );
   }
 
+  uploadImg(){
+    const fileUpload = this.fileUpload.nativeElement; 
+    fileUpload.click();
+  }
+
   readUrl(event:any) {
 		if (event.target.files && event.target.files[0]) {
 		  var reader = new FileReader();
 		  reader.onload = (event:any) => {
-			this.urlImage = event.target.result;
+      this.urlImage = event.target.result;
+      this.show = false;
+      console.log('urlIMAGE: ', this.urlImage)
 		  }
 		  reader.readAsDataURL(event.target.files[0]);
 		}
@@ -57,8 +68,9 @@ export class AddProductComponent implements OnInit {
 		const file = event.target.files[0];
 		const filePath = `uploads/profile_${id}`;
 		//const ref = this.storage.ref(filePath);
-	//	const task = this.storage.upload(filePath, file);
-		//task.snapshotChanges().pipe(finalize(() => this.urlImage = ref.getDownloadURL())).subscribe();
+		//const task = this.storage.upload(filePath, file);
+    //task.snapshotChanges().pipe(finalize(() => this.urlImage = ref.getDownloadURL())).subscribe();
+    
    }
 
 }
