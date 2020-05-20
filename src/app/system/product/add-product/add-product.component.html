@@ -77,8 +77,12 @@
                         </mat-form-field>
                     </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
-                        <img *ngIf="show" style="width: 170px; height: 170px; padding: 10px;" class="centerImg" src="https://simpleicon.com/wp-content/uploads/cloud-upload-1.png">
-                        <img *ngIf="!show" style="width: 250px; height: 170px; padding: 10px;" class="centerImg" [src]="urlImage">
+                        <div *ngIf="show" class="centerElement">
+                            <img  style="width: 170px; height: 170px; padding: 10px;" class="centerElement" src="https://simpleicon.com/wp-content/uploads/cloud-upload-1.png">
+                            <label style="padding-left: 40px;" for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>
+                        </div>
+                        
+                        <img *ngIf="!show" style="width: 250px; height: 170px; padding: 10px;" class="centerElement" [src]="urlImage">
                     </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                         <div class="p-10">
@@ -86,7 +90,7 @@
                                 <mat-icon>attach_file</mat-icon>
                             </button>
                             <input type="file" #fileUpload id="fileUpload" name="fileUpload" (change)="readUrl($event)" accept=".png, .jpg" style="display:none;">
-                            <label for="input-file-id" class="md-button md-raised md-primary p-10">Choose Files</label>
+                            <label for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>
                         </div>
                     </div>              
                 </div>
