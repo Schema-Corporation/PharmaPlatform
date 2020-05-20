@@ -76,13 +76,15 @@
                             placeholder="Tos, inflamación, dolor de garganta">
                         </mat-form-field>
                     </div>
-                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
-                        <div *ngIf="show" class="centerElement">
+                    <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100" style="border: 2px solid black; padding-bottom: 7px;">
+
+                        <div *ngIf="show" class="centerElement" >
                             <img  style="width: 170px; height: 170px; padding: 10px;" class="centerElement" src="https://simpleicon.com/wp-content/uploads/cloud-upload-1.png">
-                            <label style="padding-left: 40px;" for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>
+                            <label style="padding-left: 40px; " for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>
                         </div>
                         
-                        <img *ngIf="!show" style="width: 250px; height: 170px; padding: 10px;" class="centerElement" [src]="urlImage">
+                        <img *ngIf="!show" style="width: 250px; height: 170px; padding: 10px;" class="centerElement" [src]="LocalImageUrl">
+
                     </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                         <div class="p-10">
@@ -90,8 +92,10 @@
                                 <mat-icon>attach_file</mat-icon>
                             </button>
                             <input type="file" #fileUpload id="fileUpload" name="fileUpload" (change)="readUrl($event)" accept=".png, .jpg" style="display:none;">
-                            <label for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>
+                            <!--<label for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>-->
                         </div>
+                        <!-- descomentar para ver la url de Firebase-->
+                          <!-- <input #imageUser type="text" [value]="FirebaseImageUrl | async"> -->
                     </div>              
                 </div>
                 

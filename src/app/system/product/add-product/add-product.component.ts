@@ -3,6 +3,7 @@ import { ProductService } from "../../../service/product/product.service";
 import { IProduct } from "../../../../common/types";
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
@@ -12,7 +13,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
 })
 export class AddProductComponent implements OnInit {
   show: boolean = true;
-	urlImage: Observable<string>;
+  LocalImageUrl: Observable<string>;
+  FirebaseImageUrl: Observable<string>;
   public product: IProduct = {};
   public productTypes = [];
 
@@ -57,9 +59,9 @@ export class AddProductComponent implements OnInit {
 		if (event.target.files && event.target.files[0]) {
 		  var reader = new FileReader();
 		  reader.onload = (event:any) => {
-      this.urlImage = event.target.result;
+      this.LocalImageUrl = event.target.result;
       this.show = false;
-      console.log('urlIMAGE: ', this.urlImage)
+      console.log('LocalImageUrl: ', this.LocalImageUrl)
 		  }
 		  reader.readAsDataURL(event.target.files[0]);
 		}
@@ -67,10 +69,11 @@ export class AddProductComponent implements OnInit {
 		const id = Math.random().toString(36).substring(2);
 		const file = event.target.files[0];
 		const filePath = `uploads/profile_${id}`;
-		//const ref = this.storage.ref(filePath);
-		//const task = this.storage.upload(filePath, file);
-    //task.snapshotChanges().pipe(finalize(() => this.urlImage = ref.getDownloadURL())).subscribe();
-    
+    //const ref = this.storage.ref(filePath);
+    //const task = this.storage.upload(filePath, file);
+    //la linea 55 agrega la img a Firebase
+		//task.snapshotChanges().pipe(finalize(() => this.FirebaseImageUrl = ref.getDownloadURL())).subscribe();
+
    }
 
 }
