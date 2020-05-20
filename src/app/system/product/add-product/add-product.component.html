@@ -77,6 +77,17 @@
                         </mat-form-field>
                     </div>
                 </div>
+
+                <div fxLayout="row wrap">
+                    
+                    <div>
+                        <button id="uploadButton" class="md-fab md-mini" mat-mini-fab >
+                            <mat-icon>attach_file</mat-icon>
+                        </button>
+                    </div>
+                    <input class="ng-hide" id="input-file-id" multiple type="file" style="display:none;"/>
+                    <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
+                </div>
                 
                 <div class="buttons-footer">
                     <div class="pull-right">
