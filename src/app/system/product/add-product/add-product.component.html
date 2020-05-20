@@ -78,7 +78,7 @@
                     </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                         <img *ngIf="show" style="width: 170px; height: 170px; padding: 10px;" class="centerImg" src="https://simpleicon.com/wp-content/uploads/cloud-upload-1.png">
-                        <img *ngIf="!show" style="width: 250px; height: 170px; padding: 10px;" class="centerImg" [src]="urlImage">
+                        <img *ngIf="!show" style="width: 250px; height: 170px; padding: 10px;" class="centerImg" [src]="LocalImageUrl">
                     </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                         <div class="p-10">
@@ -88,6 +88,8 @@
                             <input type="file" #fileUpload id="fileUpload" name="fileUpload" (change)="readUrl($event)" accept=".png, .jpg" style="display:none;">
                             <label for="input-file-id" class="md-button md-raised md-primary p-10">Choose Files</label>
                         </div>
+                        <!-- descomentar para ver la url de Firebase-->
+                         <!--    <input #imageUser type="text" [value]="FirebaseImageUrl | async"> -->
                     </div>              
                 </div>
                 
