@@ -1,4 +1,4 @@
-<div class="example-login" *ngIf="!isLoggedIn">        
+<div class="example-login" *ngIf="!isLoggedIn">
     <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
     <mat-card class = "box ">
         <div class="mat-card-header-text">
@@ -18,7 +18,10 @@
                     <div>
                         <mat-form-field class="full-width">
                             <mat-label>Contraseña</mat-label>
-                            <input id="password" name="password" matInput type="password" [(ngModel)]="password" required>
+                            <input id="password" name="password" matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" required>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                           </button>
                         </mat-form-field>
                     </div>
                     <div>
