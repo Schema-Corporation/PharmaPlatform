@@ -25,7 +25,7 @@ export class APIMiddleware {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
-        "X-Company-Id": JSON.parse(JSON.stringify(localStorage.getItem('companyId'))),
+        "X-Company-Id": localStorage.getItem("companyId"),
         "X-Platform": "WEB",
       }),
     };
@@ -49,7 +49,7 @@ export class APIMiddleware {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
-        "X-Company-Id": JSON.parse(JSON.stringify(localStorage.getItem('companyId'))),
+        "X-Company-Id": localStorage.getItem("companyId"),
         "X-Platform": "WEB",
       }),
     };
@@ -61,7 +61,7 @@ export class APIMiddleware {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
-        "X-Company-Id": JSON.parse(JSON.stringify(localStorage.getItem("companyId"))),
+        "X-Company-Id": localStorage.getItem("companyId"),
         "X-Platform": "WEB",
       }),
     };

@@ -23,10 +23,10 @@
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                         <mat-form-field class="full-width p-10" [appearance]="'standard'">
                             <mat-label>Nombre de producto</mat-label>
-                            <input name="name"
+                            <input name="commercialName"
                              matInput 
                              required 
-                             [(ngModel)]="product.name"
+                             [(ngModel)]="product.commercialName"
                              placeholder="Escriba un nombre para el producto">
                         </mat-form-field>
                     </div>
@@ -46,8 +46,8 @@
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                         <mat-form-field class="full-width p-10" [appearance]="'standard'">
                             <mat-label>Stock</mat-label>
-                            <input name="stock"
-                            [(ngModel)]="product.stock"
+                            <input name="Stock"
+                            [(ngModel)]="product.amount"
                             matInput
                             required  
                             placeholder="Escriba el stock">
@@ -59,8 +59,8 @@
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                         <mat-form-field class="full-width p-10 select-padding">
                             <mat-label >Seleccione una tipo de producto</mat-label>
-                            <mat-select class="input-padding" name="productType" required [(ngModel)]="product.productTypeId">
-                                <mat-option *ngFor = "let productType of productTypes" [value] = "productType.id">
+                            <mat-select class="input-padding" name="productType" required [(ngModel)]="product.productType">
+                                <mat-option *ngFor = "let productType of productTypes" [value] = "productType.name">
                                 {{productType.name}}
                                 </mat-option>
                             </mat-select>
@@ -95,7 +95,7 @@
                             <!--<label for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>-->
                         </div>
                         <!-- descomentar para ver la url de Firebase-->
-                          <!-- <input #imageUser type="text" [value]="FirebaseImageUrl | async"> -->
+                           <input #imageUser type="hidden" [value]="FirebaseImageUrl | async"> 
                     </div>              
                 </div>
                 

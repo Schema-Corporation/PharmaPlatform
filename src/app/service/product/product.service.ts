@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { APIMiddleware } from '../APIMiddleware';
 
 const URL = "http://localhost:8082/medicines/";
-const PRODUCT = "product"
+const STOCK = "stock"
 const PRODUCT_TYPES = "product-type"
 
 @Injectable({
@@ -17,8 +17,8 @@ export class ProductService {
     public apiMiddleware: APIMiddleware
   ) { }
 
-  public saveProduct(product): Observable<any> { 
-    return this.apiMiddleware.doPOST(URL + PRODUCT, product);
+  public saveProduct(branchId: string, product): Observable<any> { 
+    return this.apiMiddleware.doPOST(URL + STOCK + `?branchId=${branchId}`, product);
   }
 
   public getProductByBranchId(branchId: string): Observable<any> {

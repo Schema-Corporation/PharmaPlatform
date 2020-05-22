@@ -3,11 +3,12 @@ import { IProductType } from './productType';
 
 export interface IProduct {
     id?: string;
-    name?: string;
+    commercialName?: string;
     code?: string;
     labName?: string;
     useDescription?: string;
-    stock?: number;
-    productTypeId?: string;
+    amount?: number;
+    imgUrl?: string;
+    productType?: string;
     branchId?: string;
 }
