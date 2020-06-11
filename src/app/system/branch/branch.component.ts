@@ -45,7 +45,9 @@ export class BranchComponent implements OnInit  {
 	}
 
 	ngOnInit() {
+	
 		var id = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
+
 		this._branchService.getBranchesById(id).subscribe(
 			data => {
 				const branches = data;

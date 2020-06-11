@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       this.router.navigateByUrl("/system/branch");
     }
+    //localStorage.setItem('companyId', "2095d570-8cb6-4522-ab9d-3b68732f69f1");
   }
 
   storeFirebaseLoginInfo(token) {
@@ -83,14 +84,14 @@ export class LoginComponent implements OnInit {
   validateUser() {
     this._authService.getInfoUser().subscribe(
       data => {
-        //console.log('data: ', data);
+        console.log('data: ', data);
         this._loginService.saveCompanyId(data.companyId); 
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
       },
       (error) => {
-        console.log("error");
+        console.log("error", error);
       }
     );
   }
