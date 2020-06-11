@@ -27,6 +27,7 @@ export interface BranchData {
 })
 export class BranchComponent implements OnInit  {
 
+	id: string;
 	displayedColumns: string[] = ['name', 'addressName', 'schedule', 'status', 'star'];
   	dataSource: MatTableDataSource<BranchData>;
 
@@ -45,14 +46,11 @@ export class BranchComponent implements OnInit  {
 	}
 
 	ngOnInit() {
-	
-		var id = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
-
-		this._branchService.getBranchesById(id).subscribe(
+		
+		this._branchService.getBranchesById(localStorage.getItem('companyId')).subscribe(
 			data => {
 				const branches = data;
 				this.dataSource = new MatTableDataSource(branches);
-				
 			}
 		);
 		this.dataSource.paginator = this.paginator;

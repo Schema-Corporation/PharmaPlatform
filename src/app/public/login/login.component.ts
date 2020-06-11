@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         firebaseData.user.getIdToken().then((token) => {
           this.storeFirebaseLoginInfo(token);
         });
-        this.toDashBoard();
+        
       })
       .catch((error) => {
         if (error.code) {
@@ -82,13 +82,21 @@ export class LoginComponent implements OnInit {
   }
 
   validateUser() {
+    
     this._authService.getInfoUser().subscribe(
       data => {
         console.log('data: ', data);
-        this._loginService.saveCompanyId(data.companyId); 
-
+        //this._loginService.saveCompanyId(data.companyId);
+        localStorage.setItem('companyId', data.companyId);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
+        
+        var companyidd = localStorage.getItem('companyId')
+        console.log('companyId: ', companyidd);
+        if (localStorage.getItem('companyId') != null){
+          this.toDashBoard();
+        }
+        
       },
       (error) => {
         console.log("error", error);
