@@ -20,13 +20,24 @@ export class APIMiddleware {
     return this.http.get(url, httpOptions);
   }
 
+  doAuthenticate(url: string, body?: any): Observable<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "X-Platform": "WEB"
+      }),
+    };
+    return this.http.post(url, body, httpOptions);
+  }
+
   doPOST(url: string, body?: any): Observable<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
         "X-Company-Id": localStorage.getItem("companyId"),
-        "X-Platform": "WEB",
+        "X-Platform": "WEB"
       }),
     };
     return this.http.post(url, body, httpOptions);
@@ -35,7 +46,7 @@ export class APIMiddleware {
   doPOSTMultipartFile(url: string, body?: any): Observable<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
-        
+
         Authorization: "Bearer " + localStorage.getItem("token"),
         "X-Company-Id": localStorage.getItem("companyId"),
         "X-Platform": "WEB"
