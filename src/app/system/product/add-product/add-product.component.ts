@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProductService } from "../../../service/product/product.service";
 import { IProduct } from "../../../../common/types";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { MySweetAlert } from '../../../../common/utils/alert';
 
 @Component({
   selector: 'app-add-product',
@@ -25,7 +26,8 @@ export class AddProductComponent implements OnInit {
   constructor(
   private _productService: ProductService,
   private route: ActivatedRoute,
-  private storage: AngularFireStorage) { }
+  private storage: AngularFireStorage, 
+  private navigationRoute: Router) { }
 
   ngOnInit(): void {
     
@@ -47,7 +49,9 @@ export class AddProductComponent implements OnInit {
             this._productService.saveProduct(branchId, this.product).subscribe(
               data => {
                 console.log('data', data);
-                // MySweetAlert.showSuccess("La sucursal ha sido agregada con éxito");
+                MySweetAlert.showSuccess("El producto ha sido agregado con éxito");
+                this.navigationRoute.navigateByUrl("/system/product");
+                
               }
             );
           }

@@ -8,6 +8,7 @@ import { IBranch } from "../../../../common/types";
 import { MySweetAlert } from "../../../../common/utils";
 import { BranchService } from "../../../service/branch/branch.service";
 import * as moment from 'moment'
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -29,7 +30,8 @@ export class AddBranchComponent implements OnInit {
 
 
   constructor(
-    private _branchService: BranchService
+    private _branchService: BranchService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +86,10 @@ export class AddBranchComponent implements OnInit {
       this._branchService.saveBranch(this.infoBranch).subscribe(
         data => {
           //console.log('data', data);
+          
           MySweetAlert.showSuccess("La sucursal ha sido agregada con éxito");
+          
+          this.router.navigateByUrl("/system/branch");
         }
       );
     } else {
