@@ -26,11 +26,11 @@ export class AddProductComponent implements OnInit {
   constructor(
   private _productService: ProductService,
   private route: ActivatedRoute,
-  private storage: AngularFireStorage, 
+  private storage: AngularFireStorage,
   private navigationRoute: Router) { }
 
   ngOnInit(): void {
-    
+
     this.getProductTypes();
     //this.urlImage = {"https://simpleicon.com/wp-content/uploads/cloud-upload-1.png"};
   }
@@ -46,12 +46,13 @@ export class AddProductComponent implements OnInit {
           imageURL => {
             //console.log('dataURL: ', dataURL);
             this.product.imgUrl = imageURL;
+            console.log('url: ', this.product.imgUrl);
             this._productService.saveProduct(branchId, this.product).subscribe(
               data => {
                 console.log('data', data);
                 MySweetAlert.showSuccess("El producto ha sido agregado con éxito");
                 this.navigationRoute.navigateByUrl("/system/product");
-                
+
               }
             );
           }
@@ -60,7 +61,7 @@ export class AddProductComponent implements OnInit {
       }
     );
 
-    
+
   }
 
   getProductTypes() {
@@ -73,7 +74,7 @@ export class AddProductComponent implements OnInit {
   }
 
   uploadImg(){
-    const fileUpload = this.fileUpload.nativeElement; 
+    const fileUpload = this.fileUpload.nativeElement;
     fileUpload.click();
   }
 
@@ -91,8 +92,8 @@ export class AddProductComponent implements OnInit {
 		const id = Math.random().toString(36).substring(2);
 		this.file = event.target.files[0];
 		this.filePath = `uploads/profile_${id}`;
-    
+
     //la linea 55 agrega la img a Firebase
-		
+
   }
 }

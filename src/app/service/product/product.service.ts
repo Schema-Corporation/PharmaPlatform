@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APIMiddleware } from '../APIMiddleware';
 
-const URL = "http://localhost:8082/medicines/";
+const URL = "http://34.120.75.160/medicines/";
 const STOCK = "stock"
 const PRODUCT_TYPES = "product-type"
 
@@ -11,13 +11,13 @@ const PRODUCT_TYPES = "product-type"
   providedIn: 'root'
 })
 export class ProductService {
-  
+
   constructor(
     private http: HttpClient,
     public apiMiddleware: APIMiddleware
   ) { }
 
-  public saveProduct(branchId: string, product): Observable<any> { 
+  public saveProduct(branchId: string, product): Observable<any> {
     return this.apiMiddleware.doPOST(URL + STOCK + `?branchId=${branchId}`, product);
   }
 

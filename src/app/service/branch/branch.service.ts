@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APIMiddleware } from '../APIMiddleware';
 
-const URL = "http://localhost:8081/pharmacies/branch";
+const URL = "http://34.120.75.160/pharmacies/branch";
 
 
 
@@ -12,13 +12,13 @@ const URL = "http://localhost:8081/pharmacies/branch";
 })
 export class BranchService {
 
-  
+
   constructor(
     private http: HttpClient,
     public apiMiddleware: APIMiddleware
   ) { }
 
-  public saveBranch(branch): Observable<any> { 
+  public saveBranch(branch): Observable<any> {
     return this.apiMiddleware.doPOST(URL, branch);
   }
 
@@ -42,7 +42,7 @@ export class BranchService {
   }
 
   getBranchNamesByCompanyId(id: string){
-    
+
     return this.apiMiddleware.doGET(URL+ `/list?companyId=${id}`);
   }
 }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { APIMiddleware } from '../APIMiddleware';
 import { Observable } from 'rxjs';
 
-const URL = "http://localhost:8082/medicines/stock/create"
+const URL = "http://34.120.75.160/medicines/stock/create"
 
 
 @Injectable({
@@ -15,7 +15,7 @@ export class UploadService {
     public apiMiddleware: APIMiddleware
     ) { }
 
-    public saveFile(branchId: string, body: any): Observable<any> { 
+    public saveFile(branchId: string, body: any): Observable<any> {
       return this.apiMiddleware.doPOSTMultipartFile(URL + `?branchId=${branchId}`, body);
     }
 
