@@ -53,7 +53,7 @@ export class AddBranchComponent implements OnInit {
         }
       }
     }
-    
+
     this.branch.districtName = district;
   }
 
@@ -66,7 +66,7 @@ export class AddBranchComponent implements OnInit {
     if (this.branch.opensAt) {
       this.isValidOpenTime = true;
     }
-    
+
     return false;
   }
 
@@ -78,17 +78,18 @@ export class AddBranchComponent implements OnInit {
   }
 
   registerBranch() {
-    
+    console.log("this.branch: ", this.branch);
     this.infoBranch = JSON.parse(JSON.stringify(this.branch));
     this.processDateTime(this.infoBranch);
+    console.log("this.infoBranch: ", this.infoBranch);
 
     if (this.validBranch()) {
       this._branchService.saveBranch(this.infoBranch).subscribe(
         data => {
           //console.log('data', data);
-          
+
           MySweetAlert.showSuccess("La sucursal ha sido agregada con éxito");
-          
+
           this.router.navigateByUrl("/system/branch");
         }
       );
@@ -110,5 +111,5 @@ export class AddBranchComponent implements OnInit {
     infoBranch.opensAt = processedOpensAt;
     infoBranch.closesAt = processedClosesAt;
   }
-  
+
 }
