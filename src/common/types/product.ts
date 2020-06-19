@@ -11,4 +11,5 @@ export interface IProduct {
     imgUrl?: string;
     productType?: string;
     branchId?: string;
+    price?: number;
 }
