@@ -3,7 +3,7 @@
             <div>
                 <div>
                     <mat-card-title>Agregar local</mat-card-title>
-                     <mat-card-subtitle>Agrega un nuevo local a tu empresa</mat-card-subtitle> 
+                     <mat-card-subtitle>Agrega un nuevo local a tu empresa</mat-card-subtitle>
                  </div>
             </div>
             <div>
@@ -15,7 +15,7 @@
                             <input  name="name"
                                     [(ngModel)]="branch.name"
                                     matInput
-                                    required  
+                                    required
                                     placeholder="Escriba un nombre para el local">
                         </mat-form-field>
 
@@ -48,7 +48,7 @@
                         </agm-map>
                     </div>
                     <div fxLayout="row wrap">
-                        <!-- column -->    
+                        <!-- column -->
                         <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                             <mat-form-field class="full-width p-10 ngx-material-timepicker-example__form-group">
                                 <mat-label>Hora de apertura</mat-label>
@@ -66,13 +66,13 @@
                     </div>
                     <div class="buttons-footer">
                         <div class="pull-right">
-                            <button mat-raised-button color="primary" value="Registrar" (click)="registerBranch()">Registrar</button>
+                            <button mat-raised-button color="primary" (click)="saveBranch()">{{!update ? "Registrar" : "Actualizar"}}</button>
                         </div>
                     </div>
                 </form>
-                
+
             </div>
-            
+
 
         </mat-card-content>
     </mat-card>

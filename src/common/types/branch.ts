@@ -1,5 +1,5 @@
 export interface IBranch {
-    id?: number;
+    id?: string;
     name?: string;
     companyId?: string;
     districtName?: string;

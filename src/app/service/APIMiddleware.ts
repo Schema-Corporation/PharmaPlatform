@@ -43,6 +43,18 @@ export class APIMiddleware {
     return this.http.post(url, body, httpOptions);
   }
 
+  doPATCH(url: string, body?: any): Observable<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "X-Company-Id": localStorage.getItem("companyId"),
+        "X-Platform": "WEB"
+      }),
+    };
+    return this.http.patch(url, body, httpOptions);
+  }
+
   doPOSTMultipartFile(url: string, body?: any): Observable<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({

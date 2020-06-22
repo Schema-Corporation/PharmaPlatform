@@ -8,7 +8,7 @@ import { IBranch } from "../../../../common/types";
 import { MySweetAlert } from "../../../../common/utils";
 import { BranchService } from "../../../service/branch/branch.service";
 import * as moment from 'moment'
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 
 
 @Component({
@@ -23,6 +23,8 @@ export class AddBranchComponent implements OnInit {
   public branch: IBranch;
   public infoBranch: IBranch;
 
+  public update: boolean = false;
+
   public isValidAddress: boolean = false;
   public isValidOpenTime: boolean = false;
   public isValidCloseTime: boolean = false;
@@ -31,7 +33,8 @@ export class AddBranchComponent implements OnInit {
 
   constructor(
     private _branchService: BranchService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +43,21 @@ export class AddBranchComponent implements OnInit {
       longitude: -77.029203,
     };
     this.branch.companyId = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
+
+    if (this.route.snapshot.params.branchId) {
+      const branchId = this.route.snapshot.params.branchId;
+      this._branchService.viewBranch(branchId).subscribe(
+        data => {
+          this.update = true;
+          this.branch = data;
+          this.branch.companyId = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
+          console.log('data', data);
+        },
+        error => {
+          console.log('error: ', error);
+        }
+      );
+    }
   }
 
   onAutocompleteSelected(result: PlaceResult) {
@@ -77,11 +95,35 @@ export class AddBranchComponent implements OnInit {
     return false;
   }
 
-  registerBranch() {
-    console.log("this.branch: ", this.branch);
+  saveBranch() {
+    if (this.update) {
+      this.updateBranch();
+    } else {
+      this.registerBranch();
+    }
+  }
+
+  updateBranch() {
     this.infoBranch = JSON.parse(JSON.stringify(this.branch));
     this.processDateTime(this.infoBranch);
-    console.log("this.infoBranch: ", this.infoBranch);
+    console.log('infoBranch: ', this.infoBranch);
+
+    this._branchService.updateBranch(this.infoBranch).subscribe(
+      data => {
+
+        MySweetAlert.showSuccess("La sucursal ha sido modificada con éxito");
+
+        this.router.navigateByUrl("/system/branch");
+      }
+    );
+
+  }
+
+  registerBranch() {
+    // console.log("this.branch: ", this.branch);
+    this.infoBranch = JSON.parse(JSON.stringify(this.branch));
+    this.processDateTime(this.infoBranch);
+    // console.log("this.infoBranch: ", this.infoBranch);
 
     if (this.validBranch()) {
       this._branchService.saveBranch(this.infoBranch).subscribe(
@@ -106,6 +148,8 @@ export class AddBranchComponent implements OnInit {
   }
 
   processDateTime(infoBranch){
+    this.branch.opensAt.replace("AM", "a.m.").replace("PM","p.m.");
+    this.branch.closesAt.replace("AM", "a.m.").replace("PM","p.m.");
     var processedOpensAt = moment(this.branch.opensAt, 'h:mm a').format('HH:mm:ss');
     var processedClosesAt = moment(this.branch.closesAt, 'h:mm a').format('HH:mm:ss');
     infoBranch.opensAt = processedOpensAt;

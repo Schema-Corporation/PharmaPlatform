@@ -1,15 +1,21 @@
 table {
     width: 100%;
   }
-  
+
   .mat-form-field {
     font-size: 14px;
     width: 100%;
   }
-  
+
 //td, th {
 //    width: 20%;
 //}
+
+.padclass {
+  padding-left: 20px;
+  padding-bottom:6px !important;
+  padding-top: 5px !important;
+}
 
 status {
   width: auto !important;

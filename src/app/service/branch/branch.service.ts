@@ -22,6 +22,14 @@ export class BranchService {
     return this.apiMiddleware.doPOST(URL, branch);
   }
 
+  public viewBranch(branchId): Observable<any> {
+    return this.apiMiddleware.doGET(URL + `/view?BranchId=${branchId}`)
+  }
+
+  public updateBranch(branch): Observable<any> {
+    return this.apiMiddleware.doPOST(URL + '/update', branch);
+  }
+
 
   public getBranchesById(id: string): Observable<any> {
 

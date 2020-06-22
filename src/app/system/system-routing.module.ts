@@ -16,6 +16,7 @@ const systemRoutes: Routes = [
   children: [
     { path: 'branch', component: BranchComponent },
     { path: 'add-branch', component: AddBranchComponent },
+    { path: 'add-branch/:branchId', component: AddBranchComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'product', component: ProductComponent },
     { path: 'add-product/:branchId', component: AddProductComponent },
@@ -27,7 +28,7 @@ const systemRoutes: Routes = [
     },
   ]
   }];
- 
+
 @NgModule({
   imports: [RouterModule.forChild(systemRoutes)],
   exports: [RouterModule],

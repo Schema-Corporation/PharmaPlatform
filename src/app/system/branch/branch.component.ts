@@ -28,10 +28,10 @@ export interface BranchData {
 export class BranchComponent implements OnInit  {
 
 	id: string;
-	displayedColumns: string[] = ['name', 'addressName', 'schedule', 'status', 'star'];
+	displayedColumns: string[] = ['id', 'name', 'addressName', 'schedule', 'status', 'star'];
   	dataSource: MatTableDataSource<BranchData>;
 
-	
+
 
 	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	@ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -41,12 +41,12 @@ export class BranchComponent implements OnInit  {
 		) {
 
 		this.dataSource = new MatTableDataSource([]);
-		
+
 		// Assign the data to the data source for the table to render
 	}
 
 	ngOnInit() {
-		
+
 		this._branchService.getBranchesById(localStorage.getItem('companyId')).subscribe(
 			data => {
 				const branches = data;
@@ -55,7 +55,7 @@ export class BranchComponent implements OnInit  {
 		);
 		this.dataSource.paginator = this.paginator;
 		this.dataSource.sort = this.sort;
-		
+
 	}
 
 	applyFilter(event: Event) {
@@ -66,5 +66,5 @@ export class BranchComponent implements OnInit  {
 			this.dataSource.paginator.firstPage();
 		}
 	}
-	
+
 }
