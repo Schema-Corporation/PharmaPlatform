@@ -4,8 +4,7 @@ import { AuthService } from './auth.service';
 import { APIMiddleware } from '../APIMiddleware'
 
 describe('AuthService', () => {
-  let service: AuthService;
-
+  let service: AuthService; 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
