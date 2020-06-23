@@ -8,6 +8,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProductComponent } from "./product/product.component";
 import { AddProductComponent } from "./product/add-product/add-product.component";
 import { StatisticsComponent } from "./statistics/statistics.component";
+import { EditProductComponent } from './product/edit-product/edit-product.component';
 
 
 const systemChildren: Routes = [
@@ -16,6 +17,7 @@ const systemChildren: Routes = [
     { path: 'add-branch', component: AddBranchComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'product', component: ProductComponent },
+    { path: 'edit-product/:stockId', component: EditProductComponent },
     { path: 'add-product/:branchId', component: AddProductComponent },
     { path: 'statistics', component: StatisticsComponent }
 ]

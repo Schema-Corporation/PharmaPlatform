@@ -41,7 +41,7 @@ export interface BranchDataInfo {
 })
 export class ProductComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'name', 'productType', 'stock', 'star'];
+  displayedColumns: string[] = ['stockId', 'code', 'name', 'productType', 'stock', 'star'];
   showProductsTable: boolean = false;
   selectedBranch: any;
   dataSource: MatTableDataSource<ProductData>;
@@ -50,7 +50,7 @@ export class ProductComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;files  = [];  
+  @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;files  = [];
 
   constructor(
     private storage: AngularFireStorage,
@@ -66,11 +66,11 @@ export class ProductComponent implements OnInit {
         return dataStr.toLowerCase().indexOf(filter) !== -1;
       };
    }
-   
+
   ngOnInit(): void {
     var id = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
 		this.getBranchesByCompanyId(id);
-    
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -87,11 +87,11 @@ export class ProductComponent implements OnInit {
   }
 
   getProductsFromBranch(obj) {
-    
+
     console.log('$event', obj.value);
     this.selectedBranch = obj.value;
     this.populateProductsByBranchId();
-    
+
   }
 
   private uploadFiles() {
@@ -106,17 +106,15 @@ export class ProductComponent implements OnInit {
     formData.append('multipartFile', file.data);
     file.inProgress = true;
     console.log('formData: ', formData);
-    
+
     this._uploadService.saveFile(this.selectedBranch.id, formData).subscribe(
       data => {
-        console.log('data: ', data);
         this.populateProductsByBranchId();
-        
       }
     )
   }
 
-  populateProductsByBranchId(){
+  populateProductsByBranchId() {
 
     this._productService.getProductByBranchId(this.selectedBranch.id).subscribe(
       data => {
@@ -127,7 +125,7 @@ export class ProductComponent implements OnInit {
   }
 
   importProducts() {
-    const fileUpload = this.fileUpload.nativeElement; 
+    const fileUpload = this.fileUpload.nativeElement;
     fileUpload.onchange = () => {
       for (let index = 0; index < fileUpload.files.length; index++) {
         const file = fileUpload.files[index];

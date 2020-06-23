@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { APIMiddleware } from '../APIMiddleware';
 
 const URL = "http://34.120.75.160/medicines/";
-const STOCK = "stock"
+const STOCK = "stock/"
+const VIEW = "view"
 const PRODUCT_TYPES = "product-type"
 
 @Injectable({
@@ -27,5 +28,9 @@ export class ProductService {
 
   public getProductTypes(): Observable<any> {
     return this.apiMiddleware.doGET(URL + PRODUCT_TYPES);
+  }
+
+  public viewProduct(stockId: string): Observable<any> {
+    return this.apiMiddleware.doGET(URL + STOCK + VIEW + `?stockId=${stockId}`);
   }
 }

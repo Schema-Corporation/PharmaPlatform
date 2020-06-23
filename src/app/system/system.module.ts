@@ -27,6 +27,7 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
+import { EditProductComponent } from './product/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
     DashboardComponent,
     ProductComponent,
     AddProductComponent,
+    EditProductComponent,
     StatisticsComponent,
     AppHeaderComponent,
     AppSidebarComponent,
@@ -51,7 +53,7 @@ import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
     NgxMaterialTimepickerModule.setLocale('es-419'),
     AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
     FormsModule,
-    
+
     //RouterModule.forChild(systemRoutes),
     SystemRoutingModule
   ],

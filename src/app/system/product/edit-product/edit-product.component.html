@@ -1,0 +1,121 @@
+<mat-card>
+  <mat-card-content>
+      <div>
+          <div>
+              <mat-card-title>Editar producto</mat-card-title>
+                  <mat-card-subtitle>Edita un producto para tu local</mat-card-subtitle>
+          </div>
+      </div>
+      <div>
+          <form>
+              <div fxLayout="row wrap">
+                  <!-- column -->
+                  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                      <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                          <mat-label>Código</mat-label>
+                          <input name="code"
+                          matInput
+                          required
+                          [(ngModel)]="product.code"
+                          placeholder="Escriba un código para el producto">
+                      </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                      <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                          <mat-label>Nombre de producto</mat-label>
+                          <input name="commercialName"
+                           matInput
+                           required
+                           [(ngModel)]="product.commercialName"
+                           placeholder="Escriba un nombre para el producto">
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div fxLayout="row wrap">
+                  <!-- column -->
+                  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                      <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                          <mat-label>Nombre del laboratorio del producto</mat-label>
+                          <input name="labName"
+                          [(ngModel)]="product.labName"
+                          matInput
+                          required
+                          placeholder="Escriba el nombre para el laboratorio">
+                      </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                      <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                          <mat-label>Stock</mat-label>
+                          <input name="Stock"
+                          [(ngModel)]="product.amount"
+                          matInput
+                          required
+                          placeholder="Escriba el stock">
+                      </mat-form-field>
+                  </div>
+              </div>
+
+              <div fxLayout="row wrap">
+                  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                      <mat-form-field class="full-width p-10 select-padding">
+                          <mat-label >Seleccione una tipo de producto</mat-label>
+                          <mat-select class="input-padding" name="productType" required [(ngModel)]="product.productType">
+                              <mat-option *ngFor = "let productType of productTypes" [value] = "productType.name">
+                              {{productType.name}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                      <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                          <mat-label>Síntomas que alivia el producto</mat-label>
+                          <input name="useDescription"
+                          [(ngModel)]="product.useDescription"
+                          matInput
+                          required
+                          placeholder="Tos, inflamación, dolor de garganta">
+                      </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field class="full-width p-10" [appearance]="'standard'">
+                        <mat-label>Precio del producto</mat-label>
+                        <input name="price"
+                        [(ngModel)]="product.price"
+                        matInput
+                        required
+                        placeholder="Precio">
+                    </mat-form-field>
+                </div>
+                  <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100" style="border: 2px solid black; padding-bottom: 7px;">
+
+                      <div *ngIf="show" class="centerElement" >
+                          <img  style="width: 170px; height: 170px; padding: 10px;" class="centerElement" [src]=product.imgUrl>
+                          <label style="padding-left: 40px; " for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>
+                      </div>
+
+                      <img *ngIf="!show" style="width: 250px; height: 170px; padding: 10px;" class="centerElement" [src]="LocalImageUrl">
+                      <div class="p-10">
+                        <button id="uploadButton" class="md-fab md-mini pull-right" (click)="uploadImg()" mat-mini-fab >
+                            <mat-icon>attach_file</mat-icon>
+                        </button>
+                        <input type="file" #fileUpload id="fileUpload" name="fileUpload" (change)="readUrl($event)" accept=".png, .jpg" style="display:none;">
+                        <!--<label for="input-file-id" class="md-button md-raised md-primary p-10">Seleccionar Imagen</label>-->
+                    </div>
+                    <!-- descomentar para ver la url de Firebase-->
+                       <input #imageUser type="hidden" [value]="FirebaseImageUrl | async">
+
+                  </div>
+              </div>
+
+              <div class="buttons-footer p-t-30">
+                  <div class="pull-right">
+                      <button mat-raised-button color="primary" value="Registrar" (click)="registerProduct()">Registrar</button>
+                  </div>
+              </div>
+          </form>
+
+      </div>
+
+
+  </mat-card-content>
+</mat-card>

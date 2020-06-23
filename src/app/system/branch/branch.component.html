@@ -16,9 +16,9 @@
                     </button>
                     <table mat-table [dataSource]="dataSource" matSort>
                         <!-- Id Column -->
-                        <ng-container matColumnDef="id" style="display: none;">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Local </th>
-                        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                        <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                        <td mat-cell *matCellDef="let row"></td>
                         </ng-container>
                         <!-- Name Column -->
                         <ng-container matColumnDef="name">

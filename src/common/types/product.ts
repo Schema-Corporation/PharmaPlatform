@@ -7,6 +7,7 @@ export interface IProduct {
     code?: string;
     labName?: string;
     useDescription?: string;
+    stockId?: string;
     amount?: number;
     imgUrl?: string;
     productType?: string;
