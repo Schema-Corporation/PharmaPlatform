@@ -22,6 +22,7 @@ import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { SystemRoutingModule } from './system-routing.module';
 import { SpinnerComponent } from './shared/spinner.component';
+import { ChartistModule } from 'ng-chartist';
 
 
 import { FullComponent } from './layouts/full/full.component';
@@ -48,6 +49,7 @@ import { EditProductComponent } from './product/edit-product/edit-product.compon
   imports: [
     CommonModule,
     DemoMaterialModule,
+    ChartistModule,
     FlexLayoutModule,
     MatGoogleMapsAutocompleteModule,
     NgxMaterialTimepickerModule.setLocale('es-419'),

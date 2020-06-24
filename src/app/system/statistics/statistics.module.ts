@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { DemoMaterialModule } from '../../demo-material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StatisticsComponent } from './statistics.component';
+import { ChartistModule } from 'ng-chartist';
 
 @NgModule({
   imports: [
     CommonModule,
     DemoMaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ChartistModule
   ],
   declarations: [StatisticsComponent]
 })
