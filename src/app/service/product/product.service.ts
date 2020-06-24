@@ -3,10 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APIMiddleware } from '../APIMiddleware';
 
-const URL = "http://34.120.75.160/medicines/";
-const STOCK = "stock/"
-const VIEW = "view"
-const PRODUCT_TYPES = "product-type"
+const URL = 'http://34.120.75.160/medicines/';
+const STOCK = 'stock/';
+const VIEW = 'view';
+const UPDATE = 'update';
+const PRODUCT_TYPES = 'product-type';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class ProductService {
 
   public getProductByBranchId(branchId: string): Observable<any> {
     return this.apiMiddleware.doGET(URL + "stock" + `?branchId=${branchId}`);
+  }
+
+  public updateProduct(product): Observable<any> {
+    return this.apiMiddleware.doPOST(URL + STOCK + UPDATE, product);
   }
 
   public getProductTypes(): Observable<any> {
