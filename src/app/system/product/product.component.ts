@@ -41,7 +41,7 @@ export interface BranchDataInfo {
 })
 export class ProductComponent implements OnInit {
 
-  displayedColumns: string[] = ['stockId', 'code', 'name', 'productType', 'stock', 'star'];
+  displayedColumns: string[] = ['code', 'name', 'productType', 'stock', 'star'];
   showProductsTable: boolean = false;
   selectedBranch: any;
   dataSource: MatTableDataSource<ProductData>;
