@@ -21,6 +21,7 @@ import { MatGoogleMapsAutocompleteModule } from "@angular-material-extensions/go
 import { NgxMaterialTimepickerModule } from "ngx-material-timepicker";
 import { AgmCoreModule } from "@agm/core";
 import { AngularFireModule } from "angularfire2";
+import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireStorageModule } from "angularfire2/storage";
 import { environment } from "../environments/environment";
@@ -48,6 +49,7 @@ import { APIMiddleware } from "./service/APIMiddleware";
       useClass: PathLocationStrategy,
     },
     AngularFireAuth,
+    AngularFirestore,
     AuthService,
     APIMiddleware,
   ],

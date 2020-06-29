@@ -29,6 +29,8 @@ import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { EditProductComponent } from './product/edit-product/edit-product.component';
+import { AngularFireModule } from 'angularfire2';
+import { TwoDigitDecimaNumberDirective } from '../directives/TwoDigitDecimaNumberDirective';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { EditProductComponent } from './product/edit-product/edit-product.compon
     AppHeaderComponent,
     AppSidebarComponent,
     ProfileComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    TwoDigitDecimaNumberDirective
   ],
   imports: [
     CommonModule,
@@ -54,6 +57,7 @@ import { EditProductComponent } from './product/edit-product/edit-product.compon
     MatGoogleMapsAutocompleteModule,
     NgxMaterialTimepickerModule.setLocale('es-419'),
     AgmCoreModule.forRoot(environment.GOOGLE_MAPS_CONFIG),
+    AngularFireModule.initializeApp(environment.FIREBASE_CONFIG),
     FormsModule,
 
     //RouterModule.forChild(systemRoutes),

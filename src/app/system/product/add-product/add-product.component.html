@@ -46,7 +46,12 @@
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
                         <mat-form-field class="full-width p-10" [appearance]="'standard'">
                             <mat-label>Stock</mat-label>
-                            <input name="Stock"
+                            <input
+                            type="number"
+                            min="1"
+                            step="1"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57 && this.value.length < 4"
+                            name="Stock"
                             [(ngModel)]="product.amount"
                             matInput
                             required
@@ -83,7 +88,7 @@
                           [(ngModel)]="product.price"
                           matInput
                           required
-                          placeholder="Precio"> 
+                          placeholder="Precio" appTwoDigitDecimaNumber>
                       </mat-form-field>
                   </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100" style="border: 2px solid black; padding-bottom: 7px;">
