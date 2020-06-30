@@ -16,6 +16,8 @@
                             <input name="code"
                             matInput
                             required
+                            maxlength="50"
+                            (keypress)="omitSpecialCharacter($event)"
                             [(ngModel)]="product.code"
                             placeholder="Escriba un código para el producto">
                         </mat-form-field>
@@ -26,6 +28,8 @@
                             <input name="commercialName"
                              matInput
                              required
+                             maxlength="50"
+                             (keypress)="omitSpecialCharacter($event)"
                              [(ngModel)]="product.commercialName"
                              placeholder="Escriba un nombre para el producto">
                         </mat-form-field>
@@ -40,6 +44,8 @@
                             [(ngModel)]="product.labName"
                             matInput
                             required
+                            maxlength="50"
+                            (keypress)="omitSpecialCharacter($event)"
                             placeholder="Escriba el nombre para el laboratorio">
                         </mat-form-field>
                     </div>
@@ -47,9 +53,7 @@
                         <mat-form-field class="full-width p-10" [appearance]="'standard'">
                             <mat-label>Stock</mat-label>
                             <input
-                            type="number"
                             min="1"
-                            step="1"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57 && this.value.length < 4"
                             name="Stock"
                             [(ngModel)]="product.amount"
@@ -78,6 +82,8 @@
                             [(ngModel)]="product.useDescription"
                             matInput
                             required
+                            maxlength="50"
+                            (keypress)="omitSpecialCharacter($event)"
                             placeholder="Tos, inflamación, dolor de garganta">
                         </mat-form-field>
                     </div>
@@ -88,7 +94,8 @@
                           [(ngModel)]="product.price"
                           matInput
                           required
-                          placeholder="Precio" appTwoDigitDecimaNumber>
+                          placeholder="Precio" 
+                          appTwoDigitDecimaNumber>
                       </mat-form-field>
                   </div>
                     <div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100" style="border: 2px solid black; padding-bottom: 7px;">

@@ -17,6 +17,7 @@
                                     matInput
                                     required
                                     maxlength="50"
+                                    (keypress)="omitSpecialCharacter($event)"
                                     placeholder="Escriba un nombre para el local">
                         </mat-form-field>
 
@@ -32,6 +33,7 @@
                                     [country]="'pe'"
                                     [types]="['address']"
                                     [(ngModel)]="branch.addressName"
+                                    (change) = "changeValues()"
                                     (onAutocompleteSelected)="onAutocompleteSelected($event)"
                                     (onLocationSelected)="onLocationSelected($event)"
                                     required>

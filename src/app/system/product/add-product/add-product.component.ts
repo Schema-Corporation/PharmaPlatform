@@ -46,15 +46,28 @@ export class AddProductComponent implements OnInit {
           imageURL => {
             //console.log('dataURL: ', dataURL);
             this.product.imgUrl = imageURL;
-            console.log('url: ', this.product.imgUrl);
-            this._productService.saveProduct(branchId, this.product).subscribe(
-              data => {
-                console.log('data', data);
-                MySweetAlert.showSuccess("El producto ha sido agregado con éxito");
-                this.navigationRoute.navigateByUrl("/system/product");
+            
+            if (this.product.code != undefined &&
+              this.product.commercialName != undefined &&
+              this.product.labName != undefined &&
+              this.product.amount != undefined &&
+              this.product.productType != undefined &&
+              this.product.useDescription != undefined &&
+              this.product.price != undefined) {
 
+                console.log('url: ', this.product.imgUrl);
+                this._productService.saveProduct(branchId, this.product).subscribe(
+                  data => {
+                    console.log('data', data);
+                    MySweetAlert.showSuccess("El producto ha sido agregado con éxito");
+                    this.navigationRoute.navigateByUrl("/system/product");
+
+                  }
+                );
+              }else {
+                MySweetAlert.showError("Por favor, complete los campos obligatorios");
               }
-            );
+            
           }
         );
 
@@ -72,6 +85,12 @@ export class AddProductComponent implements OnInit {
       }
     );
   }
+
+  omitSpecialCharacter(event){   
+		var k;  
+		k = event.charCode; 
+		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+	 }
 
   uploadImg(){
     const fileUpload = this.fileUpload.nativeElement;

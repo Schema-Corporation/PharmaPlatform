@@ -9,6 +9,7 @@ import { AngularFireStorage } from 'angularfire2/storage';
 import { BranchService } from '../../service/branch/branch.service';
 import { UploadService } from '../../service/upload/upload.service';
 import { ProductService } from '../../service/product/product.service';
+import { MySweetAlert } from '../../../common/utils/alert';
 
 export interface BranchList {
   id: string;
@@ -76,6 +77,12 @@ export class ProductComponent implements OnInit {
 
   }
 
+  omitSpecialCharacter(event){   
+    var k;  
+    k = event.charCode; 
+    return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+  }
+
   getBranchesByCompanyId(id){
     this._branchService.getBranchNamesByCompanyId(id).subscribe(
 			data => {
@@ -110,6 +117,10 @@ export class ProductComponent implements OnInit {
     this._uploadService.saveFile(this.selectedBranch.id, formData).subscribe(
       data => {
         this.populateProductsByBranchId();
+        MySweetAlert.showSuccess("Los productos han sido agregados con éxito");
+      }, error => {
+        console.log(error);
+        MySweetAlert.showError("Hubo un error al agregar los productos");
       }
     )
   }

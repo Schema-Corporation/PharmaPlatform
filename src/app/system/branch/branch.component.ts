@@ -58,6 +58,12 @@ export class BranchComponent implements OnInit  {
 
 	}
 
+	omitSpecialCharacter(event){   
+		var k;  
+		k = event.charCode; 
+		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+	 }
+
 	applyFilter(event: Event) {
 		const filterValue = (event.target as HTMLInputElement).value;
 		this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -19,7 +19,10 @@
                 <div class="m-t-20">
                     <mat-form-field>
                         <mat-label>Filtro</mat-label>
-                        <input matInput (keyup)="applyFilter($event)" placeholder="Busque un producto">
+                        <input matInput (keyup)="applyFilter($event)"
+                        maxlength="50"
+                        (keypress)="omitSpecialCharacter($event)"
+                        placeholder="Busque un producto">
                     </mat-form-field>
                 </div>
                 <div class="mat-elevation-z8" style="margin-top: 40px;">

@@ -8,7 +8,11 @@
             <div>
                 <mat-form-field>
                     <mat-label>Filtro</mat-label>
-                    <input matInput (keyup)="applyFilter($event)" placeholder="Busque un local">
+                    <input matInput 
+                    (keyup)="applyFilter($event)"
+                    maxlength="100"
+                    (keypress)="omitSpecialCharacter($event)"
+                     placeholder="Busque un local">
                 </mat-form-field>
                 <div class="mat-elevation-z8 m-t-10">
                     <button class="pull-right" mat-mini-fab [routerLink]="['/system/add-branch']" [matTooltipPosition]="'above'" matTooltip="Agregar local">

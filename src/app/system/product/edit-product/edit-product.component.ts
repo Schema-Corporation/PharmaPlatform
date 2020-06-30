@@ -55,32 +55,69 @@ export class EditProductComponent implements OnInit {
           this.FirebaseImageUrl.subscribe(
             imageURL => {
               this.product.imgUrl = imageURL;
-              console.log('url: ', this.product.imgUrl);
-              this._productService.updateProduct(this.product).subscribe(
-                data => {
-                  console.log('data', data);
-                  MySweetAlert.showSuccess("El producto ha sido actualizado con éxito");
-                  this.navigationRoute.navigateByUrl("/system/product");
+              
+              var b = this.product.amount + "true";
+              console.log("Valor de B: ", b)
+              if ( b == "true"){
+                this.product.amount = null;
+              }
 
-                }
-              );
+              if (this.product.code.length > 0 &&
+                this.product.commercialName.length > 0 &&
+                this.product.labName.length > 0  &&
+                this.product.amount != null &&
+                this.product.useDescription.length > 0  &&
+                this.product.price > 0.01) {
+
+                console.log('url: ', this.product.imgUrl);
+                this._productService.updateProduct(this.product).subscribe(
+                  data => {
+                    console.log('data', data);
+                    MySweetAlert.showSuccess("El producto ha sido actualizado con éxito");
+                    this.navigationRoute.navigateByUrl("/system/product");
+
+                  }
+                );
+            } else {
+              MySweetAlert.showError("Por favor, complete los campos obligatorios");
             }
+          }
           );
 
         }
       );
     } else {
-      this._productService.updateProduct(this.product).subscribe(
-        data => {
-          console.log('data', data);
-          MySweetAlert.showSuccess("El producto ha sido actualizado con éxito");
-          this.navigationRoute.navigateByUrl("/system/product");
+      var a = this.product.amount + "true"
+      console.log("Valor de A: ", a)
+      if ( a == "true"){
+        this.product.amount = null;
+      }
 
-        }
-      );
+      if (this.product.code.length > 0 &&
+        this.product.commercialName.length > 0 &&
+        this.product.labName.length > 0  &&
+        this.product.amount != null &&
+        this.product.useDescription.length > 0  &&
+        this.product.price > 0.01) {
+          this._productService.updateProduct(this.product).subscribe(
+            data => {
+              console.log('data', data);
+              MySweetAlert.showSuccess("El producto ha sido actualizado con éxito");
+              this.navigationRoute.navigateByUrl("/system/product");
+
+            }
+          );
+      } else {
+        MySweetAlert.showError("Por favor, complete los campos obligatorios");
+      }
     }
-
   }
+
+  omitSpecialCharacter(event){   
+		var k;  
+		k = event.charCode; 
+		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+	 }
 
   getProductTypes() {
     this._productService.getProductTypes().subscribe(

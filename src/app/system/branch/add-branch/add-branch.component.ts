@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
 import {
   Appearance,
   Location,
@@ -29,6 +29,7 @@ export class AddBranchComponent implements OnInit {
   public isValidOpenTime: boolean = false;
   public isValidCloseTime: boolean = false;
 
+  public changeUpdate: boolean = true;
 
 
   constructor(
@@ -36,6 +37,7 @@ export class AddBranchComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {}
+
 
   ngOnInit(): void {
     this.branch = {
@@ -51,6 +53,7 @@ export class AddBranchComponent implements OnInit {
           this.update = true;
           this.branch = data;
           this.branch.companyId = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
+          
           console.log('data', data);
         },
         error => {
@@ -60,8 +63,15 @@ export class AddBranchComponent implements OnInit {
     }
   }
 
+  changeValues(){
+    this.changeUpdate = false;
+    console.log("changeUpdate: ", this.changeUpdate)
+  }
+
   onAutocompleteSelected(result: PlaceResult) {
     this.branch.address = result.formatted_address;
+    //console.log("ADDRESS: ", result)
+    this.changeUpdate = true;
     this.isValidAddress = true;
     var address_components = result.address_components;
     for (var i in address_components) {
@@ -88,6 +98,12 @@ export class AddBranchComponent implements OnInit {
     return false;
   }
 
+  omitSpecialCharacter(event){   
+   var k;  
+   k = event.charCode; 
+   return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+}
+
   validateCloseTime() {
     if (this.branch.closesAt) {
       this.isValidCloseTime = true;
@@ -107,16 +123,18 @@ export class AddBranchComponent implements OnInit {
     this.infoBranch = JSON.parse(JSON.stringify(this.branch));
     this.processDateTime(this.infoBranch);
     console.log('infoBranch: ', this.infoBranch);
+    if (this.changeUpdate){
+      this._branchService.updateBranch(this.infoBranch).subscribe(
+        data => {
 
-    this._branchService.updateBranch(this.infoBranch).subscribe(
-      data => {
+          MySweetAlert.showSuccess("La sucursal ha sido modificada con éxito");
 
-        MySweetAlert.showSuccess("La sucursal ha sido modificada con éxito");
-
-        this.router.navigateByUrl("/system/branch");
-      }
-    );
-
+          this.router.navigateByUrl("/system/branch");
+        }
+      );
+    } else {
+      MySweetAlert.showError("Por favor, complete los campos correctamente");
+    }
   }
 
   registerBranch() {
