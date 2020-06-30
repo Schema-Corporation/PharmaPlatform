@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APIMiddleware } from '../APIMiddleware';
 
-const URL = "http://34.120.75.160/pharmacies/branch";
+const URL = "https://pharmaapp-services-be.com/pharmacies/branch";
 
 
 

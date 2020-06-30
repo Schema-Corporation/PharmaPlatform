@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { APIMiddleware } from '../APIMiddleware';
 import { Observable } from 'rxjs';
 
-const URL = "http://34.120.75.160/medicines/stock/create"
+const URL = "https://pharmaapp-services-be.com/medicines/stock/create"
 
 
 @Injectable({
