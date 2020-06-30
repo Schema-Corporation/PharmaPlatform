@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 
 import * as Chartist from 'chartist';
+import ChartistTooltip from 'chartist-plugin-tooltips-updated';
+import ChartistLabel from 'chartist-plugin-pointlabels'
 import { ChartType, ChartEvent } from 'ng-chartist';
 import { FirestoreService } from '../../service/statistic/firestore/firestore.service';
 import { BranchList } from '../product/product.component';
@@ -17,6 +19,11 @@ export interface Chart {
 	events?: ChartEvent;
 }
 
+export interface ChartData {
+  labels: any;
+  series: Array<number>;
+}
+
 @Component({
 	selector: 'app-statistics',
 	templateUrl: './statistics.component.html',
@@ -28,8 +35,13 @@ export class StatisticsComponent implements OnInit {
   public donuteChart1: Chart;
 
   public visits = [];
-  public visitsGraph = {};
+  public visitsBranch: any[] = [];
+  public visitsBranchPrior: any[] = [];
+  public visitsBranchGraph: ChartData;
+  public visitsGraph: {};
+  public branchsGraph = {};
   public showGraphs = false;
+  public showDonutChart = false;
   branches: BranchList[];
   public selectedBranch;
 
@@ -84,6 +96,7 @@ export class StatisticsComponent implements OnInit {
     this._branchService.getBranchNamesByCompanyId(id).subscribe(
       data => {
         this.branches = data;
+        this.fillDonutChart();
         console.log('data: ', data);
       }
     );
@@ -94,6 +107,80 @@ export class StatisticsComponent implements OnInit {
     this.getBranchesByCompanyId(id);
   }
 
+  fillDonutChart() {
+    const myBranches = this.branches;
+    var itemsProcessed = 0;
+    myBranches.forEach(branch => {
+      this.firestoreService.getViews(branch.id).subscribe(
+        (visitsSnapshot) => {
+          if (visitsSnapshot.length > 0) {
+            var visitsInBranch = 0;
+            visitsSnapshot.forEach((visitData: any) => {
+              visitsInBranch = visitsInBranch + visitData.payload.doc.data().visits;
+            });
+            this.visitsBranch.push({
+              id: branch.branchName,
+              visits: visitsInBranch
+            });
+
+          }
+          itemsProcessed = itemsProcessed + 1;
+          if (itemsProcessed == myBranches.length) {
+            this.myBranchesCallback();
+          }
+        });
+    });
+  }
+
+  myBranchesCallback() {
+    this.visitsBranch.sort((e1: any, e2: any) => {
+      return e2.visits - e1.visits;
+    })
+
+    var sumOthers = 0;
+    if (this.visitsBranch.length > 3) {
+      for (var i = 3; i < this.visitsBranch.length ; i++) {
+        sumOthers = sumOthers + this.visitsBranch[i].visits;
+      }
+    }
+    console.log('sumOthers: ', sumOthers);
+    for (var i = 0; i < 3; i++) {
+      this.visitsBranchPrior.push(this.visitsBranch[i])
+    }
+    var lastItem = {
+      id: 'Otros',
+      visits: sumOthers
+    }
+    this.visitsBranchPrior.push(lastItem);
+
+    this.convertToDonutChartData();
+  }
+
+  convertToDonutChartData() {
+    var labels = [];
+    var series = [];
+    this.visitsBranchGraph = {labels: labels, series: series};
+    console.log('this.visitsBranch 2: ', this.visitsBranch);
+    this.visitsBranchPrior.forEach((visitsBranchPriorData: any) => {
+      this.visitsBranchGraph.labels.push(visitsBranchPriorData.id);
+      this.visitsBranchGraph.series.push(visitsBranchPriorData.visits);
+    });
+
+    // This is for the donute chart
+    this.donuteChart1 = {
+      type: 'Pie',
+      data: this.visitsBranchGraph,
+      options: {
+        donut: true,
+        height: 260,
+        showLabel: false,
+        donutWidth: 20
+      }
+    };
+
+    this.showDonutChart = true;
+  }
+
   fillGraphs(visits) {
     // Barchart
     this.barChart1 = {
@@ -101,14 +188,33 @@ export class StatisticsComponent implements OnInit {
       data: visits,
       options: {
         seriesBarDistance: 15,
-        high: 12,
+        onlyInteger: true,
+        plugins: [
+          ChartistLabel({
+            textAnchor: 'middle',
+            labelOffset: {
+              x: 0,
+              y: -40
+            },
+            labelInterpolationFnc: function(value) {
+              return value
+            }
+          }),
+          ChartistTooltip({
 
+          })
+        ],
         axisX: {
           showGrid: false,
           offset: 20
         },
         axisY: {
           showGrid: true,
+          showLabel: true,
+          type: Chartist.AutoScaleAxis,
+          high: 50,
+          low: 0,
+          scaleMinSpace: 20,
           offset: 40
         },
         height: 360
@@ -131,17 +237,7 @@ export class StatisticsComponent implements OnInit {
       ]
     };
 
-    // This is for the donute chart
-    this.donuteChart1 = {
-      type: 'Pie',
-      data: data['Pie'],
-      options: {
-        donut: true,
-        height: 260,
-        showLabel: false,
-        donutWidth: 20
-      }
-    };
+
     this.showGraphs = true;
   }
 }
