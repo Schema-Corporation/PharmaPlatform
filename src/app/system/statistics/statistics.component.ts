@@ -35,6 +35,7 @@ export class StatisticsComponent implements OnInit {
   public donuteChart1: Chart;
 
   public visits = [];
+  public visitsPrior = [];
   public visitsBranch: any[] = [];
   public visitsBranchPrior: any[] = [];
   public visitsBranchGraph: ChartData;
@@ -71,7 +72,14 @@ export class StatisticsComponent implements OnInit {
   convertToChartData() {
     this.visits.sort((e1: any, e2: any) => {
       return e2.data.visits - e1.data.visits;
-    }).slice(0, 5);
+    })
+
+    if (this.visits.length > 5) {
+      for(var i = 0; i < 5; i++) {
+        this.visitsPrior.push(this.visits[i]);
+      }
+      this.visits = this.visitsPrior;
+    }
 
     this.visitsGraph = {
       'labels': [],
