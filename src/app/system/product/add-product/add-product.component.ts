@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { MySweetAlert } from '../../../../common/utils/alert';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Component({
   selector: 'app-add-product',
@@ -27,7 +28,8 @@ export class AddProductComponent implements OnInit {
   private _productService: ProductService,
   private route: ActivatedRoute,
   private storage: AngularFireStorage,
-  private navigationRoute: Router) { }
+  private navigationRoute: Router,
+  private dbService: NgxIndexedDBService) { }
 
   ngOnInit(): void {
 
@@ -46,7 +48,7 @@ export class AddProductComponent implements OnInit {
           imageURL => {
             //console.log('dataURL: ', dataURL);
             this.product.imgUrl = imageURL;
-            
+
             if (this.product.code != undefined &&
               this.product.commercialName != undefined &&
               this.product.labName != undefined &&
@@ -56,18 +58,31 @@ export class AddProductComponent implements OnInit {
               this.product.price != undefined) {
 
                 console.log('url: ', this.product.imgUrl);
-                this._productService.saveProduct(branchId, this.product).subscribe(
-                  data => {
-                    console.log('data', data);
-                    MySweetAlert.showSuccess("El producto ha sido agregado con éxito");
-                    this.navigationRoute.navigateByUrl("/system/product");
+                this.dbService.getByIndex('variables', 'name', 'token').then(
+                  token => {
+                    this.dbService.getByIndex('variables', 'name', 'companyId').then(
+                      companyId => {
+                        this._productService.saveProductIndexDB(branchId, token.value, companyId.value, this.product).subscribe(
+                          data => {
+                            console.log('data', data);
+                            MySweetAlert.showSuccess("El producto ha sido agregado con éxito");
+                            this.navigationRoute.navigateByUrl("/system/product");
 
-                  }
-                );
+                          }
+                        );
+                      },
+                      error => {
+                          console.log(error);
+                      });
+                  },
+                  error => {
+                      console.log(error);
+                  });
+
               }else {
                 MySweetAlert.showError("Por favor, complete los campos obligatorios");
               }
-            
+
           }
         );
 
@@ -78,18 +93,31 @@ export class AddProductComponent implements OnInit {
   }
 
   getProductTypes() {
-    this._productService.getProductTypes().subscribe(
-      data => {
-        this.productTypes = data;
-        //console.log('data', data);
-      }
-    );
+    this.dbService.getByIndex('variables', 'name', 'token').then(
+      token => {
+        this.dbService.getByIndex('variables', 'name', 'companyId').then(
+          companyId => {
+            this._productService.getProductTypesIndexDB(token.value, companyId.value).subscribe(
+              data => {
+                this.productTypes = data;
+                //console.log('data', data);
+              }
+            );
+          },
+          error => {
+              console.log(error);
+          });
+      },
+      error => {
+          console.log(error);
+      });
+
   }
 
-  omitSpecialCharacter(event){   
-		var k;  
-		k = event.charCode; 
-		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+  omitSpecialCharacter(event){
+		var k;
+		k = event.charCode;
+		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57));
 	 }
 
   uploadImg(){

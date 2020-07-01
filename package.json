@@ -40,6 +40,7 @@
     "jquery": "^3.5.1",
     "moment": "^2.26.0",
     "ng-chartist": "^4.1.0",
+    "ngx-indexed-db": "^5.0.5",
     "ngx-material-timepicker": "^5.5.3",
     "node-sass": "^4.14.1",
     "promise-polyfill": "^8.1.3",

@@ -23,19 +23,39 @@ export class ProductService {
     return this.apiMiddleware.doPOST(URL + STOCK + `?branchId=${branchId}`, product);
   }
 
+  public saveProductIndexDB(branchId: string, token: string, company: string, product): Observable<any> {
+    return this.apiMiddleware.doPOSTIndexDB(URL + STOCK + `?branchId=${branchId}`, token, company, product);
+  }
+
   public getProductByBranchId(branchId: string): Observable<any> {
     return this.apiMiddleware.doGET(URL + "stock" + `?branchId=${branchId}`);
+  }
+
+  public getProductByBranchIdIndexDB(branchId: string, token: string, company: string): Observable<any> {
+    return this.apiMiddleware.doGETIndexDB(URL + "stock" + `?branchId=${branchId}`, token, company);
   }
 
   public updateProduct(product): Observable<any> {
     return this.apiMiddleware.doPOST(URL + STOCK + UPDATE, product);
   }
 
+  public updateProductIndexDB(product, token: string, company: string): Observable<any> {
+    return this.apiMiddleware.doPOSTIndexDB(URL + STOCK + UPDATE, token, company, product);
+  }
+
   public getProductTypes(): Observable<any> {
     return this.apiMiddleware.doGET(URL + PRODUCT_TYPES);
   }
 
+  public getProductTypesIndexDB(token: string, company: string): Observable<any> {
+    return this.apiMiddleware.doGETIndexDB(URL + PRODUCT_TYPES, token, company);
+  }
+
   public viewProduct(stockId: string): Observable<any> {
     return this.apiMiddleware.doGET(URL + STOCK + VIEW + `?stockId=${stockId}`);
+  }
+
+  public viewProductIndexDB(stockId: string, token: string, company: string): Observable<any> {
+    return this.apiMiddleware.doGETIndexDB(URL + STOCK + VIEW + `?stockId=${stockId}`, token, company);
   }
 }

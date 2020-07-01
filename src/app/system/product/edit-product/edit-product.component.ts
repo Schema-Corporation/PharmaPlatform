@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { MySweetAlert } from '../../../../common/utils/alert';
 import { IStock } from '../../../../common/types/stock';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Component({
   selector: 'app-edit-product',
@@ -29,7 +30,8 @@ export class EditProductComponent implements OnInit {
   private _productService: ProductService,
   private route: ActivatedRoute,
   private storage: AngularFireStorage,
-  private navigationRoute: Router) { }
+  private navigationRoute: Router,
+  private dbService: NgxIndexedDBService) { }
 
   ngOnInit(): void {
 
@@ -37,11 +39,23 @@ export class EditProductComponent implements OnInit {
 
     const stockId = this.route.snapshot.params.stockId;
 
-    this._productService.viewProduct(stockId).subscribe(
-      data => {
-        this.product =  data;
-      }
-    );
+    this.dbService.getByIndex('variables', 'name', 'token').then(
+      token => {
+        this.dbService.getByIndex('variables', 'name', 'companyId').then(
+          companyId => {
+            this._productService.viewProductIndexDB(stockId, token.value, companyId.value).subscribe(
+              data => {
+                this.product =  data;
+              }
+            );
+          },
+          error => {
+              console.log(error);
+          });
+      },
+      error => {
+          console.log(error);
+      });
 
   }
 
@@ -55,7 +69,7 @@ export class EditProductComponent implements OnInit {
           this.FirebaseImageUrl.subscribe(
             imageURL => {
               this.product.imgUrl = imageURL;
-              
+
               var b = this.product.amount + "true";
               console.log("Valor de B: ", b)
               if ( b == "true"){
@@ -70,14 +84,26 @@ export class EditProductComponent implements OnInit {
                 this.product.price > 0.01) {
 
                 console.log('url: ', this.product.imgUrl);
-                this._productService.updateProduct(this.product).subscribe(
-                  data => {
-                    console.log('data', data);
-                    MySweetAlert.showSuccess("El producto ha sido actualizado con éxito");
-                    this.navigationRoute.navigateByUrl("/system/product");
+                this.dbService.getByIndex('variables', 'name', 'token').then(
+                  token => {
+                    this.dbService.getByIndex('variables', 'name', 'companyId').then(
+                      companyId => {
+                        this._productService.updateProduct(this.product).subscribe(
+                          data => {
+                            console.log('data', data);
+                            MySweetAlert.showSuccess("El producto ha sido actualizado con éxito");
+                            this.navigationRoute.navigateByUrl("/system/product");
 
-                  }
-                );
+                          }
+                        );
+                      },
+                      error => {
+                          console.log(error);
+                      });
+                  },
+                  error => {
+                      console.log(error);
+                  });
             } else {
               MySweetAlert.showError("Por favor, complete los campos obligatorios");
             }
@@ -99,32 +125,60 @@ export class EditProductComponent implements OnInit {
         this.product.amount != null &&
         this.product.useDescription.length > 0  &&
         this.product.price > 0.01) {
-          this._productService.updateProduct(this.product).subscribe(
-            data => {
-              console.log('data', data);
-              MySweetAlert.showSuccess("El producto ha sido actualizado con éxito");
-              this.navigationRoute.navigateByUrl("/system/product");
 
-            }
-          );
+          this.dbService.getByIndex('variables', 'name', 'token').then(
+            token => {
+              this.dbService.getByIndex('variables', 'name', 'companyId').then(
+                companyId => {
+                  this._productService.updateProduct(this.product).subscribe(
+                    data => {
+                      console.log('data', data);
+                      MySweetAlert.showSuccess("El producto ha sido actualizado con éxito");
+                      this.navigationRoute.navigateByUrl("/system/product");
+
+                    }
+                  );
+                },
+                error => {
+                    console.log(error);
+                });
+            },
+            error => {
+                console.log(error);
+            });
+
+
       } else {
         MySweetAlert.showError("Por favor, complete los campos obligatorios");
       }
     }
   }
 
-  omitSpecialCharacter(event){   
-		var k;  
-		k = event.charCode; 
-		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+  omitSpecialCharacter(event){
+		var k;
+		k = event.charCode;
+		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57));
 	 }
 
   getProductTypes() {
-    this._productService.getProductTypes().subscribe(
-      data => {
-        this.productTypes = data;
-      }
-    );
+    this.dbService.getByIndex('variables', 'name', 'token').then(
+      token => {
+        this.dbService.getByIndex('variables', 'name', 'companyId').then(
+          companyId => {
+            this._productService.getProductTypesIndexDB(token.value, companyId.value).subscribe(
+              data => {
+                this.productTypes = data;
+              }
+            );
+          },
+          error => {
+              console.log(error);
+          });
+      },
+      error => {
+          console.log(error);
+      });
+
   }
 
   uploadImg(){

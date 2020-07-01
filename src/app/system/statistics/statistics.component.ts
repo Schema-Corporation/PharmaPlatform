@@ -7,6 +7,7 @@ import { ChartType, ChartEvent } from 'ng-chartist';
 import { FirestoreService } from '../../service/statistic/firestore/firestore.service';
 import { BranchList } from '../product/product.component';
 import { BranchService } from '../../service/branch/branch.service';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 declare var require: any;
 
 const data: any = require('./data.json');
@@ -48,7 +49,8 @@ export class StatisticsComponent implements OnInit {
 
   constructor(
     private firestoreService: FirestoreService,
-    private _branchService: BranchService
+    private _branchService: BranchService,
+    private dbService: NgxIndexedDBService
   ) {}
 
 
@@ -100,19 +102,32 @@ export class StatisticsComponent implements OnInit {
 
   }
 
-  getBranchesByCompanyId(id){
-    this._branchService.getBranchNamesByCompanyId(id).subscribe(
-      data => {
-        this.branches = data;
-        this.fillDonutChart();
-        console.log('data: ', data);
-      }
-    );
+  getBranchesByCompanyId(){
+
+    this.dbService.getByIndex('variables', 'name', 'token').then(
+      token => {
+        this.dbService.getByIndex('variables', 'name', 'companyId').then(
+          companyId => {
+            this._branchService.getBranchNamesByCompanyIdIndexDB(companyId.value, token.value, companyId.value).subscribe(
+              data => {
+                this.branches = data;
+                this.fillDonutChart();
+                console.log('data: ', data);
+              }
+            );
+          },
+          error => {
+              console.log(error);
+          });
+      },
+      error => {
+          console.log(error);
+      });
   }
 
   ngOnInit() {
-    const id = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
-    this.getBranchesByCompanyId(id);
+    this.getBranchesByCompanyId();
+
   }
 
   fillDonutChart() {

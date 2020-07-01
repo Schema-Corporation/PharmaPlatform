@@ -10,6 +10,7 @@ import { BranchService } from '../../service/branch/branch.service';
 import { UploadService } from '../../service/upload/upload.service';
 import { ProductService } from '../../service/product/product.service';
 import { MySweetAlert } from '../../../common/utils/alert';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 export interface BranchList {
   id: string;
@@ -57,7 +58,8 @@ export class ProductComponent implements OnInit {
     private storage: AngularFireStorage,
     private _branchService: BranchService,
     private _uploadService: UploadService,
-    private _productService: ProductService
+    private _productService: ProductService,
+    private dbService: NgxIndexedDBService
     ) {
       //const products = dataProduct;
 
@@ -69,28 +71,38 @@ export class ProductComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    var id = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
-		this.getBranchesByCompanyId(id);
-
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+		this.getBranchesByCompanyId();
 
   }
 
-  omitSpecialCharacter(event){   
-    var k;  
-    k = event.charCode; 
-    return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+  omitSpecialCharacter(event){
+    var k;
+    k = event.charCode;
+    return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57));
   }
 
-  getBranchesByCompanyId(id){
-    this._branchService.getBranchNamesByCompanyId(id).subscribe(
-			data => {
-        this.branches = data;
-        console.log('data: ', data);
+  getBranchesByCompanyId(){
+    this.dbService.getByIndex('variables', 'name', 'token').then(
+      token => {
+        this.dbService.getByIndex('variables', 'name', 'companyId').then(
+          companyId => {
+            this._branchService.getBranchNamesByCompanyIdIndexDB(companyId.value, token.value, companyId.value).subscribe(
+              data => {
+                this.branches = data;
+                console.log('data: ', data);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              }
+            );
+          },
+          error => {
+              console.log(error);
+          });
+      },
+      error => {
+          console.log(error);
+      });
 
-			}
-    );
   }
 
   getProductsFromBranch(obj) {
@@ -114,25 +126,53 @@ export class ProductComponent implements OnInit {
     file.inProgress = true;
     console.log('formData: ', formData);
 
-    this._uploadService.saveFile(this.selectedBranch.id, formData).subscribe(
-      data => {
-        this.populateProductsByBranchId();
-        MySweetAlert.showSuccess("Los productos han sido agregados con éxito");
-      }, error => {
-        console.log(error);
-        MySweetAlert.showError("Hubo un error al agregar los productos");
-      }
-    )
+    this.dbService.getByIndex('variables', 'name', 'token').then(
+      token => {
+        this.dbService.getByIndex('variables', 'name', 'companyId').then(
+          companyId => {
+            this._uploadService.saveFileIndexDB(this.selectedBranch.id, token.value, companyId.value, formData).subscribe(
+              data => {
+                this.populateProductsByBranchId();
+                MySweetAlert.showSuccess("Los productos han sido agregados con éxito");
+              }, error => {
+                console.log(error);
+                MySweetAlert.showError("Hubo un error al agregar los productos, por favor virifique el documento excel subido");
+              }
+            );
+          },
+          error => {
+              console.log(error);
+          });
+      },
+      error => {
+          console.log(error);
+      });
+
+
   }
 
   populateProductsByBranchId() {
 
-    this._productService.getProductByBranchId(this.selectedBranch.id).subscribe(
-      data => {
-        this.dataSource = new MatTableDataSource(data);
-        this.showProductsTable = true;
-      }
-    );
+    this.dbService.getByIndex('variables', 'name', 'token').then(
+      token => {
+        this.dbService.getByIndex('variables', 'name', 'companyId').then(
+          companyId => {
+            this._productService.getProductByBranchIdIndexDB(this.selectedBranch.id, token.value, companyId.value).subscribe(
+              data => {
+                this.dataSource = new MatTableDataSource(data);
+                this.showProductsTable = true;
+              }
+            );
+          },
+          error => {
+              console.log(error);
+          });
+      },
+      error => {
+          console.log(error);
+      });
+
+
   }
 
   importProducts() {

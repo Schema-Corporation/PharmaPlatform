@@ -20,11 +20,23 @@ export class APIMiddleware {
     return this.http.get(url, httpOptions);
   }
 
-  doAuthenticate(url: string, body?: any): Observable<any> {
+  doGETIndexDB(url: string, token: string, companyId: string): Observable<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
+        "X-Company-Id": JSON.parse(JSON.stringify(companyId)),
+        "X-Platform": "WEB",
+      }),
+    };
+    return this.http.get(url, httpOptions);
+  }
+
+  doAuthenticate(url: string, token, body?: any): Observable<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
         "X-Platform": "WEB"
       }),
     };
@@ -37,6 +49,18 @@ export class APIMiddleware {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
         "X-Company-Id": localStorage.getItem("companyId"),
+        "X-Platform": "WEB"
+      }),
+    };
+    return this.http.post(url, body, httpOptions);
+  }
+
+  doPOSTIndexDB(url: string, token: string, companyId: string, body?: any): Observable<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        "X-Company-Id": JSON.parse(JSON.stringify(companyId)),
         "X-Platform": "WEB"
       }),
     };
@@ -61,6 +85,17 @@ export class APIMiddleware {
 
         Authorization: "Bearer " + localStorage.getItem("token"),
         "X-Company-Id": localStorage.getItem("companyId"),
+        "X-Platform": "WEB"
+      }),
+    };
+    return this.http.post(url, body, httpOptions);
+  }
+
+  doPOSTMultipartFileIndexDB(url: string, token: string, company: string, body?: any): Observable<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        Authorization: "Bearer " + token,
+        "X-Company-Id": company,
         "X-Platform": "WEB"
       }),
     };

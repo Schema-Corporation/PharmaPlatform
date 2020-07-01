@@ -9,6 +9,7 @@ import { MySweetAlert } from "../../../../common/utils";
 import { BranchService } from "../../../service/branch/branch.service";
 import * as moment from 'moment'
 import { Router, ActivatedRoute } from "@angular/router";
+import { NgxIndexedDBService } from "ngx-indexed-db";
 
 
 @Component({
@@ -35,7 +36,8 @@ export class AddBranchComponent implements OnInit {
   constructor(
     private _branchService: BranchService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dbService: NgxIndexedDBService
   ) {}
 
 
@@ -48,18 +50,33 @@ export class AddBranchComponent implements OnInit {
 
     if (this.route.snapshot.params.branchId) {
       const branchId = this.route.snapshot.params.branchId;
-      this._branchService.viewBranch(branchId).subscribe(
-        data => {
-          this.update = true;
-          this.branch = data;
-          this.branch.companyId = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
-          
-          console.log('data', data);
+
+      this.dbService.getByIndex('variables', 'name', 'token').then(
+        token => {
+          this.dbService.getByIndex('variables', 'name', 'companyId').then(
+            companyId => {
+              this._branchService.viewBranchIndexDB(branchId, token.value, companyId.value).subscribe(
+                data => {
+                  this.update = true;
+                  this.branch = data;
+                  this.branch.companyId = JSON.parse(JSON.stringify(localStorage.getItem('companyId')));
+
+                  console.log('data', data);
+                },
+                error => {
+                  console.log('error: ', error);
+                }
+              );
+            },
+            error => {
+                console.log(error);
+            });
         },
         error => {
-          console.log('error: ', error);
-        }
-      );
+            console.log(error);
+        });
+
+
     }
   }
 
@@ -98,10 +115,10 @@ export class AddBranchComponent implements OnInit {
     return false;
   }
 
-  omitSpecialCharacter(event){   
-   var k;  
-   k = event.charCode; 
-   return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+  omitSpecialCharacter(event){
+   var k;
+   k = event.charCode;
+   return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57));
 }
 
   validateCloseTime() {
@@ -124,14 +141,29 @@ export class AddBranchComponent implements OnInit {
     this.processDateTime(this.infoBranch);
     console.log('infoBranch: ', this.infoBranch);
     if (this.changeUpdate){
-      this._branchService.updateBranch(this.infoBranch).subscribe(
-        data => {
 
-          MySweetAlert.showSuccess("La sucursal ha sido modificada con éxito");
+      this.dbService.getByIndex('variables', 'name', 'token').then(
+        token => {
+          this.dbService.getByIndex('variables', 'name', 'companyId').then(
+            companyId => {
+              this._branchService.updateBranchIndexDB(this.infoBranch, token.value, companyId.value).subscribe(
+                data => {
 
-          this.router.navigateByUrl("/system/branch");
-        }
-      );
+                  MySweetAlert.showSuccess("La sucursal ha sido modificada con éxito");
+
+                  this.router.navigateByUrl("/system/branch");
+                }
+              );
+            },
+            error => {
+                console.log(error);
+            });
+        },
+        error => {
+            console.log(error);
+        });
+
+
     } else {
       MySweetAlert.showError("Por favor, complete los campos correctamente");
     }
@@ -144,15 +176,28 @@ export class AddBranchComponent implements OnInit {
     // console.log("this.infoBranch: ", this.infoBranch);
 
     if (this.validBranch()) {
-      this._branchService.saveBranch(this.infoBranch).subscribe(
-        data => {
-          //console.log('data', data);
+      this.dbService.getByIndex('variables', 'name', 'token').then(
+        token => {
+          this.dbService.getByIndex('variables', 'name', 'companyId').then(
+            companyId => {
+              this._branchService.saveBranchIndexDB(this.infoBranch, token.value, companyId.value).subscribe(
+                data => {
+                  //console.log('data', data);
 
-          MySweetAlert.showSuccess("La sucursal ha sido agregada con éxito");
+                  MySweetAlert.showSuccess("La sucursal ha sido agregada con éxito");
 
-          this.router.navigateByUrl("/system/branch");
-        }
-      );
+                  this.router.navigateByUrl("/system/branch");
+                }
+              );
+            },
+            error => {
+                console.log(error);
+            });
+        },
+        error => {
+            console.log(error);
+        });
+
     } else {
       MySweetAlert.showError("Por favor, complete los campos obligatorios");
     }

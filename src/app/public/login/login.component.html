@@ -12,12 +12,12 @@
                     <div>
                         <mat-form-field class="full-width">
                             <mat-label>Usuario</mat-label>
-                            <input id="userName" 
-                            name="userName" 
+                            <input id="userName"
+                            name="userName"
                             type="email"
-                            matInput 
+                            matInput
                             maxlength="50"
-                            [(ngModel)]="userName" 
+                            [(ngModel)]="userName"
                             required>
                         </mat-form-field>
                     </div>
@@ -25,11 +25,11 @@
                         <mat-form-field class="full-width">
                             <mat-label>Contraseña</mat-label>
                             <input id="password"
-                             name="password" 
-                             matInput 
+                             name="password"
+                             matInput
                              maxlength="50"
-                             [type]="hide ? 'password' : 'text'" 
-                             [(ngModel)]="password" 
+                             [type]="hide ? 'password' : 'text'"
+                             [(ngModel)]="password"
                              required>
                             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

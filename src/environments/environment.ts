@@ -19,5 +19,17 @@ export const environment = {
     messagingSenderId: '601968913327',
     appId: '1:601968913327:web:b1085287e850522e649d5a',
     measurementId: 'G-3EL52RP9XD'
+  },
+  INDEXEDDB_CONFIG: {
+    name: 'PharmaAppDb',
+    version: 1,
+    objectStoresMeta: [{
+      store: 'variables',
+      storeConfig: { keyPath: 'id', autoIncrement: true },
+      storeSchema: [
+        { name: 'name', keypath: 'name', options: { unique: false } },
+        { name: 'value', keypath: 'value', options: { unique: false } }
+      ]
+    }]
   }
 };

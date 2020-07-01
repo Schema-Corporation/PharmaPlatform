@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { BranchService } from "../../service/branch/branch.service";
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 //declare var require: any;
 
@@ -37,7 +38,8 @@ export class BranchComponent implements OnInit  {
 	@ViewChild(MatSort, {static: true}) sort: MatSort;
 
 	constructor(
-		private _branchService: BranchService
+    private _branchService: BranchService,
+    private dbService: NgxIndexedDBService
 		) {
 
 		this.dataSource = new MatTableDataSource([]);
@@ -47,21 +49,35 @@ export class BranchComponent implements OnInit  {
 
 	ngOnInit() {
 
-		this._branchService.getBranchesById(localStorage.getItem('companyId')).subscribe(
-			data => {
-				const branches = data;
-				this.dataSource = new MatTableDataSource(branches);
-			}
-		);
-		this.dataSource.paginator = this.paginator;
-		this.dataSource.sort = this.sort;
+    this.dbService.getByIndex('variables', 'name', 'token').then(
+      token => {
+        this.dbService.getByIndex('variables', 'name', 'companyId').then(
+          companyId => {
+            this._branchService.getBranchesByIdIndexDB(companyId.value, token.value, companyId.value).subscribe(
+              data => {
+                const branches = data;
+                this.dataSource = new MatTableDataSource(branches);
+              }
+            );
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          },
+          error => {
+              console.log(error);
+          });
+      },
+      error => {
+          console.log(error);
+      });
+
+
 
 	}
 
-	omitSpecialCharacter(event){   
-		var k;  
-		k = event.charCode; 
-		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57)); 
+	omitSpecialCharacter(event){
+		var k;
+		k = event.charCode;
+		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 225 || k==233 || k==237 || k==243 || k==250 || k == 32 || (k >= 48 && k <= 57));
 	 }
 
 	applyFilter(event: Event) {

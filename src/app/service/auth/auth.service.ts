@@ -18,7 +18,7 @@ export class AuthService {
     public apiMiddleware: APIMiddleware
   ) {}
 
-  getInfoUser(): Observable<any> {
-    return this.apiMiddleware.doAuthenticate(URL + "/authentication");
+  getInfoUser(token: string): Observable<any> {
+    return this.apiMiddleware.doAuthenticate(URL + "/authentication", token);
   }
 }

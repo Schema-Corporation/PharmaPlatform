@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { LoginService } from "./login.service";
 import { MySweetAlert } from "../../../common/utils";
 import { AuthService } from "../../service/auth/auth.service";
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Component({
   selector: "app-login",
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private _loginService: LoginService,
     private _authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dbService: NgxIndexedDBService
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +35,23 @@ export class LoginComponent implements OnInit {
 
   storeFirebaseLoginInfo(token) {
     this._loginService.saveToken(token);
-    this.validateUser();
+    this.dbService.add('variables', { name: 'token', value: token }).then(
+      () => {
+        this.dbService.getByIndex('variables', 'name', 'token').then(
+          token => {
+            this.validateUser(token.value);
+          },
+          error => {
+              console.log(error);
+          });
+          // Do something after the value was added
+
+      },
+      error => {
+          console.log("ERROR: ", error);
+      }
+    );
+
   }
 
   login() {
@@ -41,12 +59,22 @@ export class LoginComponent implements OnInit {
       .login(this.userName, this.password)
       .then((firebaseData) => {
         this._loginService.saveUser(firebaseData.user.email);
-        firebaseData.user.getIdToken().then((token) => {
-          this.storeFirebaseLoginInfo(token);
-        });
-        
+        this.dbService.add('variables', { name: 'user', value: firebaseData.user.email }).then(
+          () => {
+              // Do something after the value was added
+              firebaseData.user.getIdToken().then((token) => {
+                this.storeFirebaseLoginInfo(token);
+              });
+          },
+          error => {
+              console.log(error);
+          }
+        );
+
+
       })
       .catch((error) => {
+        console.log("ERROR: ", error);
         if (error.code) {
           this.isLoginFailed = true;
           const errorCode = error.code;
@@ -81,22 +109,28 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl("/system/branch");
   }
 
-  validateUser() {
-    
-    this._authService.getInfoUser().subscribe(
+  validateUser(token) {
+
+    this._authService.getInfoUser(token).subscribe(
       data => {
         console.log('data: ', data);
         //this._loginService.saveCompanyId(data.companyId);
         localStorage.setItem('companyId', data.companyId);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        
-        var companyidd = localStorage.getItem('companyId')
-        console.log('companyId: ', companyidd);
-        if (localStorage.getItem('companyId') != null){
-          this.toDashBoard();
-        }
-        
+        this.dbService.add('variables', { name: 'companyId', value: data.companyId }).then(
+          companyId => {
+            this.isLoginFailed = false;
+            this.isLoggedIn = true;
+            this.dbService.getByIndex('variables', 'name', 'companyId').then(
+              companyId => {
+                this.toDashBoard();
+              },
+              error => {
+                  console.log(error);
+              });
+          },
+          error => {
+              console.log(error);
+          });
       },
       (error) => {
         console.log("error", error);

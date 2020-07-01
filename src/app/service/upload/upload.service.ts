@@ -19,4 +19,8 @@ export class UploadService {
       return this.apiMiddleware.doPOSTMultipartFile(URL + `?branchId=${branchId}`, body);
     }
 
+    public saveFileIndexDB(branchId: string, token: string, company: string, body: any): Observable<any> {
+      return this.apiMiddleware.doPOSTMultipartFileIndexDB(URL + `?branchId=${branchId}`, token, company, body);
+    }
+
 }
