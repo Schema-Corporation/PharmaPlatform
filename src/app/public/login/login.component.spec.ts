@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { LoginService } from './login.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { APIMiddleware } from '../../service/APIMiddleware';
+import  { NgxIndexedDBService } from 'ngx-indexed-db'
 
 const AngularFireMocks = {
   auth: of({ uid: 'ABC123' })
@@ -18,7 +19,7 @@ describe('LoginComponent', () => {
   let loginService: LoginService;
 
   const authState = {
-    displayName: null,
+    //displayName: null,
     isAnonymous: true,
     uid: '17WvU2Vj58SnTz8v7EqyYYb0WRc2'
   };
@@ -39,9 +40,9 @@ describe('LoginComponent', () => {
       declarations: [ LoginComponent ],
       imports: [ RouterTestingModule, HttpClientTestingModule ],
       providers:[
-        { provide: AngularFireAuth, useValue: mockAngularFireAuth },
+        { provide: AngularFireAuth, useValue: mockAngularFireAuth,},
         { provide: LoginService, useClass: LoginService},
-        APIMiddleware
+        APIMiddleware,NgxIndexedDBService 
       ]
     })
     .compileComponents();

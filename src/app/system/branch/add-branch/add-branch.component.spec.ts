@@ -4,6 +4,7 @@ import { AddBranchComponent } from './add-branch.component';
 import { APIMiddleware } from '../../../service/APIMiddleware';
 import { RouterTestingModule } from "@angular/router/testing";
 import { AgmCoreModule, AgmMarker} from '@agm/core'
+import  { NgxIndexedDBService } from 'ngx-indexed-db'
 import {
     MatGoogleMapsAutocompleteComponent,
     MatGoogleMapsAutocompleteModule
@@ -28,7 +29,7 @@ describe('AddBranchComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AddBranchComponent,AgmMarker],
       imports: [HttpClientTestingModule,RouterTestingModule,MatGoogleMapsAutocompleteModule, AgmCoreModule.forRoot()],
-      providers: [APIMiddleware,MatGoogleMapsAutocompleteComponent,MatGoogleMapsAutocompleteComponent, ]
+      providers: [APIMiddleware,MatGoogleMapsAutocompleteComponent,MatGoogleMapsAutocompleteComponent,NgxIndexedDBService ]
     })
     .compileComponents();
   }));

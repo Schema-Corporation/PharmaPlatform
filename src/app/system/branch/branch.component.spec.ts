@@ -5,6 +5,7 @@ import { APIMiddleware } from '../../service/APIMiddleware';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import  { NgxIndexedDBService } from 'ngx-indexed-db'
 
 describe('BranchComponent', () => {
   let component: BranchComponent;
@@ -14,7 +15,7 @@ describe('BranchComponent', () => {
     TestBed.configureTestingModule({ 
       declarations: [ BranchComponent ],    
       imports: [HttpClientTestingModule],
-      providers: [APIMiddleware,MatPaginator,MatSort,MatTableDataSource]
+      providers: [APIMiddleware,MatPaginator,MatSort,MatTableDataSource,NgxIndexedDBService]
 
     })
     .compileComponents();
