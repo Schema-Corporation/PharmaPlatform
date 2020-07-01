@@ -42,8 +42,9 @@ describe('LoginComponent', () => {
       providers:[
         { provide: AngularFireAuth, useValue: mockAngularFireAuth,},
         { provide: LoginService, useClass: LoginService},
-        APIMiddleware,NgxIndexedDBService 
-      ]
+        APIMiddleware,
+        { provide: NgxIndexedDBService, useValue: {} }
+       ]
     })
     .compileComponents();
   }));

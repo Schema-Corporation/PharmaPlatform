@@ -10,7 +10,8 @@ describe('FirestoreService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:[AngularFirestoreModule,AngularFireDatabaseModule],
-      providers: [AngularFirestore]
+      providers: [AngularFirestore, 
+      { provide: FirestoreService, useValue: {} }]
     });
   });
 

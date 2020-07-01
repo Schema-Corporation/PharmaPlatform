@@ -15,7 +15,9 @@ describe('BranchComponent', () => {
     TestBed.configureTestingModule({ 
       declarations: [ BranchComponent ],    
       imports: [HttpClientTestingModule],
-      providers: [APIMiddleware,MatPaginator,MatSort,MatTableDataSource,NgxIndexedDBService]
+      providers: [APIMiddleware,MatPaginator,MatSort,MatTableDataSource,
+        { provide: NgxIndexedDBService, useValue: {} }
+      ]
 
     })
     .compileComponents();

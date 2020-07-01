@@ -29,7 +29,9 @@ describe('AddBranchComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AddBranchComponent,AgmMarker],
       imports: [HttpClientTestingModule,RouterTestingModule,MatGoogleMapsAutocompleteModule, AgmCoreModule.forRoot()],
-      providers: [APIMiddleware,MatGoogleMapsAutocompleteComponent,MatGoogleMapsAutocompleteComponent,NgxIndexedDBService ]
+      providers: [APIMiddleware,MatGoogleMapsAutocompleteComponent,MatGoogleMapsAutocompleteComponent,
+        { provide: NgxIndexedDBService, useValue: {} }
+       ]
     })
     .compileComponents();
   }));
