@@ -29,7 +29,6 @@ describe('StatisticsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StatisticsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

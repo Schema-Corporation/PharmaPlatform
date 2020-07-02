@@ -26,7 +26,6 @@ describe('BranchComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BranchComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
